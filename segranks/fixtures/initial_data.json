@@ -1,1 +1,262 @@
-[{"pk": 1, "fields": {"name": "log entry", "app_label": "admin", "model": "logentry"}, "model": "contenttypes.contenttype"}, {"pk": 2, "fields": {"name": "permission", "app_label": "auth", "model": "permission"}, "model": "contenttypes.contenttype"}, {"pk": 3, "fields": {"name": "group", "app_label": "auth", "model": "group"}, "model": "contenttypes.contenttype"}, {"pk": 4, "fields": {"name": "user", "app_label": "auth", "model": "user"}, "model": "contenttypes.contenttype"}, {"pk": 5, "fields": {"name": "content type", "app_label": "contenttypes", "model": "contenttype"}, "model": "contenttypes.contenttype"}, {"pk": 6, "fields": {"name": "session", "app_label": "sessions", "model": "session"}, "model": "contenttypes.contenttype"}, {"pk": 7, "fields": {"name": "project", "app_label": "annotate", "model": "project"}, "model": "contenttypes.contenttype"}, {"pk": 8, "fields": {"name": "rank project", "app_label": "ranks", "model": "rankproject"}, "model": "contenttypes.contenttype"}, {"pk": 9, "fields": {"name": "sentence", "app_label": "ranks", "model": "sentence"}, "model": "contenttypes.contenttype"}, {"pk": 10, "fields": {"name": "segment", "app_label": "ranks", "model": "segment"}, "model": "contenttypes.contenttype"}, {"pk": 11, "fields": {"name": "annotation", "app_label": "ranks", "model": "annotation"}, "model": "contenttypes.contenttype"}, {"pk": 12, "fields": {"name": "registration profile", "app_label": "registration", "model": "registrationprofile"}, "model": "contenttypes.contenttype"}, {"pk": "dw3mj6rwiwou6q8tqh033bijblzd9nx8", "fields": {"session_data": "ZWY4NTE4MmU2NzEwODQ2YzljMjkxZjU5MjFhNGQ4ZDIxYjYyNjQ4Yzp7fQ==", "expire_date": "2014-04-10T09:56:57.457Z"}, "model": "sessions.session"}, {"pk": "q36jnltxk3s0oxzdzt3hmdml0r7sbmgj", "fields": {"session_data": "NDcwMTViNDFlNzRmZmU2OGFlMGExMDFhY2Y0YjBiNTY3NTJhNWFmODp7Il9hdXRoX3VzZXJfaWQiOjEsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=", "expire_date": "2014-04-10T09:57:07.220Z"}, "model": "sessions.session"}, {"pk": 1, "fields": {"name": "zkusebni", "created": "2014-03-27T09:57:40.939Z", "description": "description"}, "model": "annotate.project"}, {"pk": 1, "fields": {"instructions": "instructions"}, "model": "ranks.rankproject"}, {"pk": 1, "fields": {"sentence_id": 1000, "project": 1, "source_str": "But Mr Palmer claimed it was only ministers who could have a conflict of interest and said Mr Abbott &apos;s daughters stood to personally benefit from policies .", "reference_str": "Ale pan Palmer tvrdil, \u017ee ve st\u0159etu z\u00e1jm\u016f mohou b\u00fdt pouze minist\u0159i, a dodal, \u017ee Abbottovy dcery byly v pozici, kdy mohly m\u00edt z dan\u00e9 politiky osobn\u00ed u\u017eitek."}, "model": "ranks.sentence"}, {"pk": 2, "fields": {"sentence_id": 1001, "project": 1, "source_str": "&quot; He &apos;s got a major conflict of interest when it comes to paid parental leave because if any of those daughters get pregnant , he &apos;ll have a direct interest whether they get leave or not , &quot; Mr Palmer said .", "reference_str": "\u201eDostal se do velk\u00e9ho st\u0159etu z\u00e1jm\u016f, pokud jde o placenou rodi\u010dovskou dovolenou, proto\u017ee pokud by kter\u00e1koliv z jeho dcer ot\u011bhotn\u011bla, m\u011bl by p\u0159\u00edm\u00fd z\u00e1jem o to, zda by dostala rodi\u010dovskou dovolenou,\u201c \u0159ekl pan Palmer."}, "model": "ranks.sentence"}, {"pk": 3, "fields": {"sentence_id": 1002, "project": 1, "source_str": "Two months after the election , the electoral commission officially declared Mr Palmer the winner of the Sunshine Coast seat of Fairfax by 53 votes , after a recount .", "reference_str": "Dva m\u011bs\u00edce po volb\u00e1ch volebn\u00ed komise po p\u0159epo\u010dtu hlas\u016f ofici\u00e1ln\u011b prohl\u00e1sila pana Palmera za v\u00edt\u011bze v boji o k\u0159eslo za okrsek Fairfax v oblasti Sunshine Coast d\u00edky zisku 53 hlas\u016f."}, "model": "ranks.sentence"}, {"pk": 4, "fields": {"sentence_id": 1003, "project": 1, "source_str": "Mr Palmer called for overhaul of election counting to speed up the process .", "reference_str": "Pan Palmer vyzval k p\u0159ezkoum\u00e1n\u00ed volebn\u00edch v\u00fdsledk\u016f, aby se proces urychlil."}, "model": "ranks.sentence"}, {"pk": 5, "fields": {"sentence_id": 1004, "project": 1, "source_str": "Tony Abbott &apos;s daughters Frances and Bridget .", "reference_str": "Dcery Tonyho Abbotta Frances a Bridget."}, "model": "ranks.sentence"}, {"pk": 6, "fields": {"sentence_id": 1005, "project": 1, "source_str": "Should this election be decided two months after we stopped voting ?", "reference_str": "M\u011blo by se o t\u011bchto volb\u00e1ch rozhodnout dva m\u011bs\u00edce po uzav\u0159en\u00ed volebn\u00edch m\u00edstnost\u00ed?"}, "model": "ranks.sentence"}, {"pk": 7, "fields": {"sentence_id": 1006, "project": 1, "source_str": "&quot; We need to have a better system , &quot; he said .", "reference_str": "\u201eMus\u00edme m\u00edt lep\u0161\u00ed syst\u00e9m,\u201c \u0159ekl."}, "model": "ranks.sentence"}, {"pk": 1, "fields": {"candidates_str": "by mohla m\u00edt konflikt z\u00e1jm\u016f\nby mohli m\u00edt konflikt z\u00e1jm\u016f\nby mohli m\u00edt st\u0159et z\u00e1jmu\nby mohli m\u00edt st\u0159et z\u00e1jm\u016f\nmohli m\u00edt konflikt z\u00e1jm\u016f\nmohli m\u00edt st\u0159et z\u00e1jm\u016f", "sentence": 1, "segment_str": "could have a conflict of interest"}, "model": "ranks.segment"}, {"pk": 2, "fields": {"candidates_str": "Abbotta nepostavily osobn\u011b t\u011b\u017eit z politik\nAbbotta osobn\u011b ku prosp\u011bchu politiky\nAbbotta \u017ee osobn\u011b t\u011b\u017e\u00ed z politik\nnastoupily osobn\u011b p\u0159in\u00e1\u0161ej\u00ed prosp\u011bch z politick\u00fdch program\u016f\nst\u00e1l na osobn\u00ed prosp\u011bch z politiky\nst\u00e1l osobn\u011b t\u011b\u017eit z politiky\nst\u00e1l \u017ee osobn\u011b t\u011b\u017e\u00ed z politiky", "sentence": 1, "segment_str": "stood to personally benefit from policies"}, "model": "ranks.segment"}, {"pk": 3, "fields": {"candidates_str": "m\u00edt p\u0159\u00edm\u00fd z\u00e1jem", "sentence": 2, "segment_str": "a direct interest"}, "model": "ranks.segment"}, {"pk": 4, "fields": {"candidates_str": "dostal hlavn\u00ed st\u0159et z\u00e1jm\u016f\nm\u00e1 hlavn\u00ed konflikt z\u00e1jm\u016f\nvelk\u00fd st\u0159et z\u00e1jmu\nvelk\u00fd st\u0159et z\u00e1jm\u016f\nz\u00e1sadn\u00ed st\u0159et z\u00e1jm\u016f", "sentence": 2, "segment_str": "a major conflict of interest"}, "model": "ranks.segment"}, {"pk": 5, "fields": {"candidates_str": "jeden z t\u011bch dcer je t\u011bhotn\u00e1\nkter\u00fdkoliv z t\u011bch dcer dostat gravidn\u00ed\nn\u011bkdo z t\u011bch dcer ot\u011bhotn\u011bt\nn\u011bkter\u00e1 z t\u011bchto dcer ot\u011bhotn\u011bla\nn\u011bkter\u00fdch z t\u011bchto dcer jsou t\u011bhotn\u00e9\nn\u011bkter\u00fd t\u011bch dcer dostat t\u011bhotn\u00fd\nn\u011bkter\u00fd z t\u011bchto dcer ot\u011bhotn\u011bla\nn\u011bkter\u00fd z t\u011bchto dcery ot\u011bhotn\u011bt", "sentence": 2, "segment_str": "any of those daughters get pregnant"}, "model": "ranks.segment"}, {"pk": 6, "fields": {"candidates_str": "placen\u00e9 rodi\u010dovsk\u00e9 dovolen\u00e9\nplacen\u00e9 rodi\u010dovsk\u00e9 dovolen\u00ed\nplacenou rodi\u010dovskou dovolenou\nzaplacen\u00e9 prodlou\u017een\u00e9 mate\u0159sk\u00e9 dovolen\u00e9\nzaplatit rodi\u010dovskou dovolenou", "sentence": 2, "segment_str": "paid parental leave"}, "model": "ranks.segment"}, {"pk": 7, "fields": {"candidates_str": "\u201c pan Palmer\n\u201d pan Palmer\n&quot; pan Palmer", "sentence": 2, "segment_str": "&quot; Mr Palmer"}, "model": "ranks.segment"}, {"pk": 8, "fields": {"candidates_str": "t\u011bhotn\u00e1 to zda maj\u00ed odej\u00edt nebo ne\nt\u011bhotn\u00e9 zda nemaj\u00ed dovolenou nebo\ntom zda se dostanou dovolenou nebo ne\nto , zda m\u00e1 odej\u00edt nebo ne\nto , zda se ponechaj\u00ed nebo ne\n, zda dostanou volno nebo ne\nzda oni dostanou dovolen\u00ed nebo ne\nzda oni dostanou dovolenou nebo ne", "sentence": 2, "segment_str": "whether they get leave or not"}, "model": "ranks.segment"}, {"pk": 9, "fields": {"candidates_str": "po hlase\npo nov\u00e9m po\u010d\u00edt\u00e1n\u00ed\npo p\u0159epo\u010det hlas\u016f\npo p\u0159epo\u010d\u00edt\u00e1n\u00ed\npo p\u0159epo\u010dten\u00ed hlas\u016f", "sentence": 3, "segment_str": "after a recount"}, "model": "ranks.segment"}, {"pk": 10, "fields": {"candidates_str": "Fairfax 53 hlasy\nFairfaxa 53 hlas\u016f\nFairfax do 53 hlas\u016f\nFairfax o 53 hlas\u016f\nFairfaxovou 53 hlas\u016f\nFairfaxu 53 hlasy", "sentence": 3, "segment_str": "by 53 votes"}, "model": "ranks.segment"}, {"pk": 11, "fields": {"candidates_str": "ve volebn\u00ed komise\nvolebn\u00ed komise\nvolebn\u00ed Komise\nvoli\u010dsk\u00e1 komise\n\u017ee volebn\u00ed komise", "sentence": 3, "segment_str": "the electoral commission"}, "model": "ranks.segment"}, {"pk": 12, "fields": {"candidates_str": "laure\u00e1ta Sunshine Coast zachv\u00e1cen\u00fdch Fairfaxovou\npob\u0159e\u017en\u00edho sedadla slune\u010dn\u00edho svitu Fairfax\nslune\u010dn\u00edho pob\u0159e\u017en\u00edho s\u00eddla Fairfaxa\nSlune\u010dn\u00edho s\u00eddla pob\u0159e\u017e\u00ed Fairfaxu\nSunshine Coast m\u00edsto Fairfax\nSunshine Coast sedadle Fairfax\nSunshine Coast s\u00eddla Fairfax\nSunshine Coast s\u00eddlo Fairfax\nthe Sunshine Coast s\u00eddlo Fairfaxovou", "sentence": 3, "segment_str": "the Sunshine Coast seat of Fairfax"}, "model": "ranks.segment"}, {"pk": 13, "fields": {"candidates_str": "Dva m\u011bs\u00edce po volb\u00e1ch\nPo volb\u011b dvou m\u011bs\u00edc\u00edch", "sentence": 3, "segment_str": "Two months after the election"}, "model": "ranks.segment"}, {"pk": 14, "fields": {"candidates_str": "gener\u00e1lku po\u010d\u00edtat do urychlit proces\nk po\u010d\u00edt\u00e1n\u00ed cel\u00fd proces urychlit\nopravit zrychlit proces\npo\u010d\u00edt\u00e1n\u00ed aby urychlil proces\npo\u010d\u00edt\u00e1n\u00ed aby urychlily proces\npo\u010d\u00edt\u00e1n\u00ed urychlit proces\npo\u010d\u00edt\u00e1 pro urychlen\u00ed cel\u00e9ho procesu", "sentence": 4, "segment_str": "counting to speed up the process"}, "model": "ranks.segment"}, {"pk": 15, "fields": {"candidates_str": "Abbott dcery Frances a Bridget\nAbbott dcery Frances a brigita\nAbbottova dcery Frances a Brigita\nAbbottovy dcery Frances a Bridget\nDcery Frances Abbotta a Bridget\nDcery Frances Abbotta a brigita", "sentence": 5, "segment_str": "&apos;s daughters Frances and Bridget"}, "model": "ranks.segment"}, {"pk": 16, "fields": {"candidates_str": "dva m\u011bs\u00edce po my jsme zastavili hlasov\u00e1n\u00ed\ndva m\u011bs\u00edce pot\u00e9 co jsme p\u0159estali volit\ndva m\u011bs\u00edce pot\u00e9 co jsme se zastavili hlasov\u00e1n\u00ed\ndva m\u011bs\u00edce po zastavili jsme hlasov\u00e1n\u00ed\npot\u00e9 jsme co dva m\u011bs\u00edce p\u0159estali hlasovat\nrozhodnut\u00e9 dva m\u011bs\u00edce my jsme zastavili hlasov\u00e1n\u00ed", "sentence": 6, "segment_str": "two months after we stopped voting"}, "model": "ranks.segment"}, {"pk": 17, "fields": {"candidates_str": "Mus\u00edme m\u00edt lep\u0161\u00ed syst\u00e9m\npot\u0159ebujeme m\u00edt lep\u0161\u00ed syst\u00e9m\nPot\u0159ebujeme m\u00edt lep\u0161\u00ed syst\u00e9m", "sentence": 7, "segment_str": "need to have a better system"}, "model": "ranks.segment"}, {"pk": 18, "fields": {"candidates_str": "\u201d on \u0159\u00edkal\n&quot; \u0159ekl\n\u201c \u0159ekl", "sentence": 7, "segment_str": "&quot; he said"}, "model": "ranks.segment"}, {"pk": 1, "fields": {"name": "Can add log entry", "codename": "add_logentry", "content_type": 1}, "model": "auth.permission"}, {"pk": 2, "fields": {"name": "Can change log entry", "codename": "change_logentry", "content_type": 1}, "model": "auth.permission"}, {"pk": 3, "fields": {"name": "Can delete log entry", "codename": "delete_logentry", "content_type": 1}, "model": "auth.permission"}, {"pk": 4, "fields": {"name": "Can add permission", "codename": "add_permission", "content_type": 2}, "model": "auth.permission"}, {"pk": 5, "fields": {"name": "Can change permission", "codename": "change_permission", "content_type": 2}, "model": "auth.permission"}, {"pk": 6, "fields": {"name": "Can delete permission", "codename": "delete_permission", "content_type": 2}, "model": "auth.permission"}, {"pk": 7, "fields": {"name": "Can add group", "codename": "add_group", "content_type": 3}, "model": "auth.permission"}, {"pk": 8, "fields": {"name": "Can change group", "codename": "change_group", "content_type": 3}, "model": "auth.permission"}, {"pk": 9, "fields": {"name": "Can delete group", "codename": "delete_group", "content_type": 3}, "model": "auth.permission"}, {"pk": 10, "fields": {"name": "Can add user", "codename": "add_user", "content_type": 4}, "model": "auth.permission"}, {"pk": 11, "fields": {"name": "Can change user", "codename": "change_user", "content_type": 4}, "model": "auth.permission"}, {"pk": 12, "fields": {"name": "Can delete user", "codename": "delete_user", "content_type": 4}, "model": "auth.permission"}, {"pk": 13, "fields": {"name": "Can add content type", "codename": "add_contenttype", "content_type": 5}, "model": "auth.permission"}, {"pk": 14, "fields": {"name": "Can change content type", "codename": "change_contenttype", "content_type": 5}, "model": "auth.permission"}, {"pk": 15, "fields": {"name": "Can delete content type", "codename": "delete_contenttype", "content_type": 5}, "model": "auth.permission"}, {"pk": 16, "fields": {"name": "Can add session", "codename": "add_session", "content_type": 6}, "model": "auth.permission"}, {"pk": 17, "fields": {"name": "Can change session", "codename": "change_session", "content_type": 6}, "model": "auth.permission"}, {"pk": 18, "fields": {"name": "Can delete session", "codename": "delete_session", "content_type": 6}, "model": "auth.permission"}, {"pk": 19, "fields": {"name": "Can add project", "codename": "add_project", "content_type": 7}, "model": "auth.permission"}, {"pk": 20, "fields": {"name": "Can change project", "codename": "change_project", "content_type": 7}, "model": "auth.permission"}, {"pk": 21, "fields": {"name": "Can delete project", "codename": "delete_project", "content_type": 7}, "model": "auth.permission"}, {"pk": 22, "fields": {"name": "Can add rank project", "codename": "add_rankproject", "content_type": 8}, "model": "auth.permission"}, {"pk": 23, "fields": {"name": "Can change rank project", "codename": "change_rankproject", "content_type": 8}, "model": "auth.permission"}, {"pk": 24, "fields": {"name": "Can delete rank project", "codename": "delete_rankproject", "content_type": 8}, "model": "auth.permission"}, {"pk": 25, "fields": {"name": "Can add sentence", "codename": "add_sentence", "content_type": 9}, "model": "auth.permission"}, {"pk": 26, "fields": {"name": "Can change sentence", "codename": "change_sentence", "content_type": 9}, "model": "auth.permission"}, {"pk": 27, "fields": {"name": "Can delete sentence", "codename": "delete_sentence", "content_type": 9}, "model": "auth.permission"}, {"pk": 28, "fields": {"name": "Can add segment", "codename": "add_segment", "content_type": 10}, "model": "auth.permission"}, {"pk": 29, "fields": {"name": "Can change segment", "codename": "change_segment", "content_type": 10}, "model": "auth.permission"}, {"pk": 30, "fields": {"name": "Can delete segment", "codename": "delete_segment", "content_type": 10}, "model": "auth.permission"}, {"pk": 31, "fields": {"name": "Can add annotation", "codename": "add_annotation", "content_type": 11}, "model": "auth.permission"}, {"pk": 32, "fields": {"name": "Can change annotation", "codename": "change_annotation", "content_type": 11}, "model": "auth.permission"}, {"pk": 33, "fields": {"name": "Can delete annotation", "codename": "delete_annotation", "content_type": 11}, "model": "auth.permission"}, {"pk": 34, "fields": {"name": "Can add registration profile", "codename": "add_registrationprofile", "content_type": 12}, "model": "auth.permission"}, {"pk": 35, "fields": {"name": "Can change registration profile", "codename": "change_registrationprofile", "content_type": 12}, "model": "auth.permission"}, {"pk": 36, "fields": {"name": "Can delete registration profile", "codename": "delete_registrationprofile", "content_type": 12}, "model": "auth.permission"}, {"pk": 1, "fields": {"date_joined": "2014-03-27T09:56:39.695Z", "is_superuser": true, "password": "pbkdf2_sha256$12000$F18JYLA9xzrU$B7bRuYWuBs7Hu/WamevZzPGoDpesHQevhlPTDSbsgXY=", "is_active": true, "groups": [], "first_name": "", "is_staff": true, "last_login": "2014-03-27T09:57:07.144Z", "last_name": "", "username": "mmachace", "email": "machacekmatous@gmail.com", "user_permissions": []}, "model": "auth.user"}]
+[
+    {
+        "fields": {
+            "instructions": "instructions",
+            "created": "2014-03-27T09:57:40.939Z",
+            "description": "description",
+            "name": "zkusebni"
+        },
+        "model": "segranks.rankproject",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "project": 1,
+            "reference_str": "Ale pan Palmer tvrdil, \u017ee ve st\u0159etu z\u00e1jm\u016f mohou b\u00fdt pouze minist\u0159i, a dodal, \u017ee Abbottovy dcery byly v pozici, kdy mohly m\u00edt z dan\u00e9 politiky osobn\u00ed u\u017eitek.",
+            "sentence_id": 1000,
+            "source_str": "But Mr Palmer claimed it was only ministers who could have a conflict of interest and said Mr Abbott &apos;s daughters stood to personally benefit from policies ."
+        },
+        "model": "segranks.sentence",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "project": 1,
+            "reference_str": "\u201eDostal se do velk\u00e9ho st\u0159etu z\u00e1jm\u016f, pokud jde o placenou rodi\u010dovskou dovolenou, proto\u017ee pokud by kter\u00e1koliv z jeho dcer ot\u011bhotn\u011bla, m\u011bl by p\u0159\u00edm\u00fd z\u00e1jem o to, zda by dostala rodi\u010dovskou dovolenou,\u201c \u0159ekl pan Palmer.",
+            "sentence_id": 1001,
+            "source_str": "&quot; He &apos;s got a major conflict of interest when it comes to paid parental leave because if any of those daughters get pregnant , he &apos;ll have a direct interest whether they get leave or not , &quot; Mr Palmer said ."
+        },
+        "model": "segranks.sentence",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "project": 1,
+            "reference_str": "Dva m\u011bs\u00edce po volb\u00e1ch volebn\u00ed komise po p\u0159epo\u010dtu hlas\u016f ofici\u00e1ln\u011b prohl\u00e1sila pana Palmera za v\u00edt\u011bze v boji o k\u0159eslo za okrsek Fairfax v oblasti Sunshine Coast d\u00edky zisku 53 hlas\u016f.",
+            "sentence_id": 1002,
+            "source_str": "Two months after the election , the electoral commission officially declared Mr Palmer the winner of the Sunshine Coast seat of Fairfax by 53 votes , after a recount ."
+        },
+        "model": "segranks.sentence",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "project": 1,
+            "reference_str": "Pan Palmer vyzval k p\u0159ezkoum\u00e1n\u00ed volebn\u00edch v\u00fdsledk\u016f, aby se proces urychlil.",
+            "sentence_id": 1003,
+            "source_str": "Mr Palmer called for overhaul of election counting to speed up the process ."
+        },
+        "model": "segranks.sentence",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "project": 1,
+            "reference_str": "Dcery Tonyho Abbotta Frances a Bridget.",
+            "sentence_id": 1004,
+            "source_str": "Tony Abbott &apos;s daughters Frances and Bridget ."
+        },
+        "model": "segranks.sentence",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "project": 1,
+            "reference_str": "M\u011blo by se o t\u011bchto volb\u00e1ch rozhodnout dva m\u011bs\u00edce po uzav\u0159en\u00ed volebn\u00edch m\u00edstnost\u00ed?",
+            "sentence_id": 1005,
+            "source_str": "Should this election be decided two months after we stopped voting ?"
+        },
+        "model": "segranks.sentence",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "project": 1,
+            "reference_str": "\u201eMus\u00edme m\u00edt lep\u0161\u00ed syst\u00e9m,\u201c \u0159ekl.",
+            "sentence_id": 1006,
+            "source_str": "&quot; We need to have a better system , &quot; he said ."
+        },
+        "model": "segranks.sentence",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "candidates_str": "by mohla m\u00edt konflikt z\u00e1jm\u016f\nby mohli m\u00edt konflikt z\u00e1jm\u016f\nby mohli m\u00edt st\u0159et z\u00e1jmu\nby mohli m\u00edt st\u0159et z\u00e1jm\u016f\nmohli m\u00edt konflikt z\u00e1jm\u016f\nmohli m\u00edt st\u0159et z\u00e1jm\u016f",
+            "segment_str": "could have a conflict of interest",
+            "sentence": 1
+        },
+        "model": "segranks.segment",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "candidates_str": "Abbotta nepostavily osobn\u011b t\u011b\u017eit z politik\nAbbotta osobn\u011b ku prosp\u011bchu politiky\nAbbotta \u017ee osobn\u011b t\u011b\u017e\u00ed z politik\nnastoupily osobn\u011b p\u0159in\u00e1\u0161ej\u00ed prosp\u011bch z politick\u00fdch program\u016f\nst\u00e1l na osobn\u00ed prosp\u011bch z politiky\nst\u00e1l osobn\u011b t\u011b\u017eit z politiky\nst\u00e1l \u017ee osobn\u011b t\u011b\u017e\u00ed z politiky",
+            "segment_str": "stood to personally benefit from policies",
+            "sentence": 1
+        },
+        "model": "segranks.segment",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "candidates_str": "m\u00edt p\u0159\u00edm\u00fd z\u00e1jem",
+            "segment_str": "a direct interest",
+            "sentence": 2
+        },
+        "model": "segranks.segment",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "candidates_str": "dostal hlavn\u00ed st\u0159et z\u00e1jm\u016f\nm\u00e1 hlavn\u00ed konflikt z\u00e1jm\u016f\nvelk\u00fd st\u0159et z\u00e1jmu\nvelk\u00fd st\u0159et z\u00e1jm\u016f\nz\u00e1sadn\u00ed st\u0159et z\u00e1jm\u016f",
+            "segment_str": "a major conflict of interest",
+            "sentence": 2
+        },
+        "model": "segranks.segment",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "candidates_str": "jeden z t\u011bch dcer je t\u011bhotn\u00e1\nkter\u00fdkoliv z t\u011bch dcer dostat gravidn\u00ed\nn\u011bkdo z t\u011bch dcer ot\u011bhotn\u011bt\nn\u011bkter\u00e1 z t\u011bchto dcer ot\u011bhotn\u011bla\nn\u011bkter\u00fdch z t\u011bchto dcer jsou t\u011bhotn\u00e9\nn\u011bkter\u00fd t\u011bch dcer dostat t\u011bhotn\u00fd\nn\u011bkter\u00fd z t\u011bchto dcer ot\u011bhotn\u011bla\nn\u011bkter\u00fd z t\u011bchto dcery ot\u011bhotn\u011bt",
+            "segment_str": "any of those daughters get pregnant",
+            "sentence": 2
+        },
+        "model": "segranks.segment",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "candidates_str": "placen\u00e9 rodi\u010dovsk\u00e9 dovolen\u00e9\nplacen\u00e9 rodi\u010dovsk\u00e9 dovolen\u00ed\nplacenou rodi\u010dovskou dovolenou\nzaplacen\u00e9 prodlou\u017een\u00e9 mate\u0159sk\u00e9 dovolen\u00e9\nzaplatit rodi\u010dovskou dovolenou",
+            "segment_str": "paid parental leave",
+            "sentence": 2
+        },
+        "model": "segranks.segment",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "candidates_str": "\u201c pan Palmer\n\u201d pan Palmer\n&quot; pan Palmer",
+            "segment_str": "&quot; Mr Palmer",
+            "sentence": 2
+        },
+        "model": "segranks.segment",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "candidates_str": "t\u011bhotn\u00e1 to zda maj\u00ed odej\u00edt nebo ne\nt\u011bhotn\u00e9 zda nemaj\u00ed dovolenou nebo\ntom zda se dostanou dovolenou nebo ne\nto , zda m\u00e1 odej\u00edt nebo ne\nto , zda se ponechaj\u00ed nebo ne\n, zda dostanou volno nebo ne\nzda oni dostanou dovolen\u00ed nebo ne\nzda oni dostanou dovolenou nebo ne",
+            "segment_str": "whether they get leave or not",
+            "sentence": 2
+        },
+        "model": "segranks.segment",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "candidates_str": "po hlase\npo nov\u00e9m po\u010d\u00edt\u00e1n\u00ed\npo p\u0159epo\u010det hlas\u016f\npo p\u0159epo\u010d\u00edt\u00e1n\u00ed\npo p\u0159epo\u010dten\u00ed hlas\u016f",
+            "segment_str": "after a recount",
+            "sentence": 3
+        },
+        "model": "segranks.segment",
+        "pk": 9
+    },
+    {
+        "fields": {
+            "candidates_str": "Fairfax 53 hlasy\nFairfaxa 53 hlas\u016f\nFairfax do 53 hlas\u016f\nFairfax o 53 hlas\u016f\nFairfaxovou 53 hlas\u016f\nFairfaxu 53 hlasy",
+            "segment_str": "by 53 votes",
+            "sentence": 3
+        },
+        "model": "segranks.segment",
+        "pk": 10
+    },
+    {
+        "fields": {
+            "candidates_str": "ve volebn\u00ed komise\nvolebn\u00ed komise\nvolebn\u00ed Komise\nvoli\u010dsk\u00e1 komise\n\u017ee volebn\u00ed komise",
+            "segment_str": "the electoral commission",
+            "sentence": 3
+        },
+        "model": "segranks.segment",
+        "pk": 11
+    },
+    {
+        "fields": {
+            "candidates_str": "laure\u00e1ta Sunshine Coast zachv\u00e1cen\u00fdch Fairfaxovou\npob\u0159e\u017en\u00edho sedadla slune\u010dn\u00edho svitu Fairfax\nslune\u010dn\u00edho pob\u0159e\u017en\u00edho s\u00eddla Fairfaxa\nSlune\u010dn\u00edho s\u00eddla pob\u0159e\u017e\u00ed Fairfaxu\nSunshine Coast m\u00edsto Fairfax\nSunshine Coast sedadle Fairfax\nSunshine Coast s\u00eddla Fairfax\nSunshine Coast s\u00eddlo Fairfax\nthe Sunshine Coast s\u00eddlo Fairfaxovou",
+            "segment_str": "the Sunshine Coast seat of Fairfax",
+            "sentence": 3
+        },
+        "model": "segranks.segment",
+        "pk": 12
+    },
+    {
+        "fields": {
+            "candidates_str": "Dva m\u011bs\u00edce po volb\u00e1ch\nPo volb\u011b dvou m\u011bs\u00edc\u00edch",
+            "segment_str": "Two months after the election",
+            "sentence": 3
+        },
+        "model": "segranks.segment",
+        "pk": 13
+    },
+    {
+        "fields": {
+            "candidates_str": "gener\u00e1lku po\u010d\u00edtat do urychlit proces\nk po\u010d\u00edt\u00e1n\u00ed cel\u00fd proces urychlit\nopravit zrychlit proces\npo\u010d\u00edt\u00e1n\u00ed aby urychlil proces\npo\u010d\u00edt\u00e1n\u00ed aby urychlily proces\npo\u010d\u00edt\u00e1n\u00ed urychlit proces\npo\u010d\u00edt\u00e1 pro urychlen\u00ed cel\u00e9ho procesu",
+            "segment_str": "counting to speed up the process",
+            "sentence": 4
+        },
+        "model": "segranks.segment",
+        "pk": 14
+    },
+    {
+        "fields": {
+            "candidates_str": "Abbott dcery Frances a Bridget\nAbbott dcery Frances a brigita\nAbbottova dcery Frances a Brigita\nAbbottovy dcery Frances a Bridget\nDcery Frances Abbotta a Bridget\nDcery Frances Abbotta a brigita",
+            "segment_str": "&apos;s daughters Frances and Bridget",
+            "sentence": 5
+        },
+        "model": "segranks.segment",
+        "pk": 15
+    },
+    {
+        "fields": {
+            "candidates_str": "dva m\u011bs\u00edce po my jsme zastavili hlasov\u00e1n\u00ed\ndva m\u011bs\u00edce pot\u00e9 co jsme p\u0159estali volit\ndva m\u011bs\u00edce pot\u00e9 co jsme se zastavili hlasov\u00e1n\u00ed\ndva m\u011bs\u00edce po zastavili jsme hlasov\u00e1n\u00ed\npot\u00e9 jsme co dva m\u011bs\u00edce p\u0159estali hlasovat\nrozhodnut\u00e9 dva m\u011bs\u00edce my jsme zastavili hlasov\u00e1n\u00ed",
+            "segment_str": "two months after we stopped voting",
+            "sentence": 6
+        },
+        "model": "segranks.segment",
+        "pk": 16
+    },
+    {
+        "fields": {
+            "candidates_str": "Mus\u00edme m\u00edt lep\u0161\u00ed syst\u00e9m\npot\u0159ebujeme m\u00edt lep\u0161\u00ed syst\u00e9m\nPot\u0159ebujeme m\u00edt lep\u0161\u00ed syst\u00e9m",
+            "segment_str": "need to have a better system",
+            "sentence": 7
+        },
+        "model": "segranks.segment",
+        "pk": 17
+    },
+    {
+        "fields": {
+            "candidates_str": "\u201d on \u0159\u00edkal\n&quot; \u0159ekl\n\u201c \u0159ekl",
+            "segment_str": "&quot; he said",
+            "sentence": 7
+        },
+        "model": "segranks.segment",
+        "pk": 18
+    },
+    {
+        "fields": {
+            "date_joined": "2014-03-27T09:56:39.695Z",
+            "email": "machacekmatous@gmail.com",
+            "first_name": "",
+            "groups": [],
+            "is_active": true,
+            "is_staff": true,
+            "is_superuser": true,
+            "last_login": "2014-03-27T09:57:07.144Z",
+            "last_name": "",
+            "password": "pbkdf2_sha256$12000$F18JYLA9xzrU$B7bRuYWuBs7Hu/WamevZzPGoDpesHQevhlPTDSbsgXY=",
+            "user_permissions": [],
+            "username": "mmachace"
+        },
+        "model": "auth.user",
+        "pk": 1
+    }
+]
