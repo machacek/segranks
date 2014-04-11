@@ -1,0 +1,31 @@
+.alert.sentence {
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+ul.ranklist {
+    list-style-type: none;
+    overflow: display;
+    //width: 100%;
+}
+
+.candidate-draggable {
+    margin: 2px;
+}
+
+ul.ranklist li {
+    display: inline-block;
+    list-style-type: none;
+}
+
+ul.srcsegment {
+    list-style-type: none;
+    overflow: display;
+    //width: 100%;
+}
+
+ul.srcsegment li {
+    display: inline-block;
+    list-style-type: none;
+}
+

@@ -1,0 +1,4 @@
+Django==1.6.2
+django-bootstrap3==3.3.0
+django-model-utils==2.0.3
+django-reg==1.0.1
