@@ -21,6 +21,12 @@
         <ul class="nav navbar-nav navbar-right">
             <li><a href="{% url 'segranks.views.projectlistview' %}">Home</a></li>
             <li><a href="{% url 'segranks.views.aboutview' %}">About</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'auth_logout' %}">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'registration_register' %}">Registration</a></li>
+            <li><a href="{% url 'auth_login' %}">Login</a></li>
+            {% endif %}
         </ul>
     </div>
 </div>
