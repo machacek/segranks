@@ -6,33 +6,37 @@ class ProjectListView(ListView):
     model = RankProject
     template_name = "project_list.html"
 
-class AnnotateView(TemplateView):
+class AnnotateView(DetailView):
     template_name = "annotate.html"
+
+    def post(self, request, *args, **kwargs):
+
+        print(request.POST['segments_number'])
+
+        for i in range(int(request.POST['segments_number'])):
+            segment_pk = int(request.POST["segment_%s_pk" % i])
+            segment = Segment.objects.get(pk=segment_pk)
+
+            ranks = [int(request.POST["segment_%s_candidate_%s_rank" % (i,j)]) for j in range(len(segment.candidates))]
+
+            segment.annotations.create(
+                    ranks = " ".join(map(str, ranks)),
+                    annotator = request.user,
+                    )
+
+        return self.get(request, *args, **kwargs)
     
-    def get_sentence(self):
-        sentence = Segment.objects\
+    def get_object(self):
+        return Segment.objects\
                 .filter(sentence__project__pk = self.kwargs['pk'])\
                 .annotate(num_annot=Count('annotations'))\
-                .order_by('-num_annot')\
+                .order_by('num_annot', '?')\
                 .first()\
                 .sentence
 
-        sentence = Sentence.objects.order_by('?')[0]
-
-        return sentence
-
     def get_context_data(self, *args, **kwargs):
         context = super(AnnotateView, self).get_context_data(**kwargs)
-        sentence = self.get_sentence()
-        context['sentence'] = sentence
-
-        segments = list(sentence.segments.all())
-        for segment in segments:
-            segment.candidates_split = segment.candidates_str.split('\n')
-        context['segments'] = segments
-
         context['ranks'] = range(1,6)
-
         return context
 
 class AboutView(TemplateView):

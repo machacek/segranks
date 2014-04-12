@@ -30,6 +30,10 @@ class Segment(models.Model):
     segment_str = models.TextField()
     candidates_str = models.TextField()
 
+    @property
+    def candidates(self):
+        return self.candidates_str.split('\n')
+
     def __str__(self):
         return short(self.segment_str)
 

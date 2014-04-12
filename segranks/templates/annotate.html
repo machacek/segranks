@@ -12,11 +12,11 @@
         <p><b>Reference:</b> {{ sentence.reference_str }}</p>
     </div>
 
-    <form>
-        
-        <input type="hidden" name="segments_number" value="{{ segments | length }}"/>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="segments_number" value="{{ sentence.segments.count }}"/>
 
-        {% for segment in segments %}
+        {% for segment in sentence.segments.all %}
         <div class="alert alert-danger segment-annotation">
             {% with forloop.counter0 as segment_i %}
             <input type="hidden" name="segment_{{ segment_i }}_pk" value="{{ segment.pk }}" />
@@ -29,7 +29,7 @@
             <div class="rank-bin unannotated-bin" data-rank="-1">
                 <ul class="horizontal-list rank-list ">
                     <li class="rank-label"><span class="label label-danger ">Unannotated</span></li>
-                    {% for candidate in segment.candidates_split %}
+                    {% for candidate in segment.candidates %}
                     {% with forloop.counter0 as candidate_i %}
                     <li class="draggable-segment">
                         <span class="label label-success"> {{ candidate }}</span>
