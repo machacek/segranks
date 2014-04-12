@@ -31,6 +31,8 @@ class AnnotateView(TemplateView):
             segment.candidates_split = segment.candidates_str.split('\n')
         context['segments'] = segments
 
+        context['ranks'] = range(1,6)
+
         return context
 
 class AboutView(TemplateView):

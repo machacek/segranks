@@ -12,69 +12,85 @@
         <p><b>Reference:</b> {{ sentence.reference_str }}</p>
     </div>
 
-    {% for segment in segments %}
+    <form>
+        
+        <input type="hidden" name="segments_number" value="{{ segments | length }}"/>
 
-    <div class="alert alert-danger segment-annotation containment">
-        <div class="sentence-segment">
-            <ul class="srcsegment">
-                <li class="rank-label"><span class="label label-danger ">Source Segment</span></li>
-                <li class="rank-label"><span class="label label-warning ">{{ segment.segment_str }}</span></li>
-            </ul>
-        </div>
-        <div class="unanotated snap">
-            <ul class="ranklist">
-                <li class="rank-label"><span class="label label-danger ">Unannotated</span></li>
-                {% for candidate in segment.candidates_split %}
-                <li>
-                    <span class="label label-success candidate-draggable"> {{ candidate }}</span>
-                </li>
-                {% endfor %}
-            </ul>
+        {% for segment in segments %}
+        <div class="alert alert-danger segment-annotation">
+            {% with forloop.counter0 as segment_i %}
+            <input type="hidden" name="segment_{{ segment_i }}_pk" value="{{ segment.pk }}" />
+            <div class="sentence-segment">
+                <ul class="horizontal-list">
+                    <li class="rank-label"><span class="label label-danger ">Source Segment</span></li>
+                    <li class="rank-label"><span class="label label-warning ">{{ segment.segment_str }}</span></li>
+                </ul>
+            </div>
+            <div class="rank-bin unannotated-bin" data-rank="-1">
+                <ul class="horizontal-list rank-list ">
+                    <li class="rank-label"><span class="label label-danger ">Unannotated</span></li>
+                    {% for candidate in segment.candidates_split %}
+                    {% with forloop.counter0 as candidate_i %}
+                    <li class="draggable-segment">
+                        <span class="label label-success"> {{ candidate }}</span>
+                        <input type="hidden" name="segment_{{ segment_i }}_candidate_{{ candidate_i }}_rank" value="none" class="hidden-rank"/>
+                    </li>
+                    {% endwith %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            {% for rank in ranks %}
+            <div class="rank-bin" data-rank="{{ rank }}">
+                <ul class="horizontal-list rank-list">
+                    <li class="rank-label"><span class="label label-danger ">Rank {{ rank }}</span></li>
+                </ul>
+            </div>
+            {% endfor %}
+            {% endwith %}
         </div>
 
-        <div class="bins">
-            <div class="bin-droppable snap">
-                <ul class="ranklist">
-                    <li class="rank-label"><span class="label label-danger ">Rank 1</span></li>
-                </ul>
-            </div>
-            <div class="bin-droppable snap">
-                <ul class="ranklist">
-                    <li class="rank-label"><span class="label label-danger ">Rank 2</span></li>
-                </ul>
-            </div>
-            <div class="bin-droppable snap">
-                <ul class="ranklist">
-                    <li class="rank-label"><span class="label label-danger ">Rank 3</span></li>
-                </ul>
-            </div>
-            <div class="bin-droppable snap">
-                <ul class="ranklist">
-                    <li class="rank-label"><span class="label label-danger">Rank 4</span></li>
-                </ul>
-            </div>
-            <div class="bin-droppable snap">
-                <ul class="ranklist">
-                    <li class="rank-label"><span class="label label-danger">Rank 5</span></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+        {% endfor %}
 
-    {% endfor %}
+        <div class="alert alert-success">
+            <input id="submit-button" type="submit" value="Submit">
+        </div>
+    </form>
 
     <script type="text/javascript">
+
+function update_submit_button() {
+    if ($('.unannotated-bin .draggable-segment').length) {
+        $('#submit-button').attr('disabled','disabled');
+    } else {
+        $('#submit-button').removeAttr('disabled');
+    }
+}
+
+function rank_update(event, ui) {
+    var rank = $(ui.item).closest('.rank-bin').data('rank');
+    $(ui.item).find('.hidden-rank').val(rank);
+    update_submit_button();
+}
+
 $(document).ready(function(){
 
-        $('.ranklist').sortable({
-            connectWith: '.ranklist',
-            items: '.candidate-draggable',
-            
-            
-        }).disableSelection();
+        $('.segment-annotation').each(function() {
+            $(this).find('.rank-list')
+                .sortable({
+                    connectWith: $(this).find('.rank-list'),
+                    containment: $(this),
+                    items: '.draggable-segment', 
+                    update: rank_update,
+                    })
+                })
+            .disableSelection();
 
+        update_submit_button()
 
         });
+
+        
     </script>
 </div>
 
