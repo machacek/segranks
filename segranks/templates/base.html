@@ -16,12 +16,11 @@
 <div class="navbar navbar-inverse navbar-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Annotate</a>
+            <a class="navbar-brand" href="{% url 'segranks.views.projectlistview' %}">SegRanks</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="{% url 'segranks.views.projectlistview' %}">Home</a></li>
+            <li><a href="{% url 'segranks.views.aboutview' %}">About</a></li>
         </ul>
     </div>
 </div>
