@@ -4,11 +4,11 @@
 
 <div>
     <h1>Sentence {{ sentence.pk }}</h1>
-    <div class="alert alert-success alert sentence">
+    <div class="alert alert-info alert sentence">
         <p><b>Source:</b> {{ sentence.source_str }}</p>
     </div>
 
-    <div class="alert alert-info sentence">
+    <div class="alert alert-success sentence">
         <p><b>Reference:</b> {{ sentence.reference_str }}</p>
     </div>
 
@@ -17,37 +17,42 @@
         <input type="hidden" name="segments_number" value="{{ sentence.segments.count }}"/>
 
         {% for segment in sentence.segments.all %}
-        <div class="alert alert-danger segment-annotation">
+        <div class="panel panel-primary segment-annotation">
             {% with forloop.counter0 as segment_i %}
             <input type="hidden" name="segment_{{ segment_i }}_pk" value="{{ segment.pk }}" />
-            <div class="sentence-segment">
-                <ul class="horizontal-list">
-                    <li class="rank-label"><span class="label label-danger ">Source Segment</span></li>
-                    <li class="rank-label"><span class="label label-warning ">{{ segment.segment_str }}</span></li>
-                </ul>
-            </div>
-            <div class="rank-bin unannotated-bin" data-rank="-1">
-                <ul class="horizontal-list rank-list ">
-                    <li class="rank-label"><span class="label label-danger ">Unannotated</span></li>
+
+            <div class="panel-heading">
+                <h4>Segment {{forloop.counter}}</h4>
+                <p><b>Source:</b> {{ segment.segment_str }}</p>
+                <ul class="horizontal-list rank-list unannotated-bin" data-rank="-1">
                     {% for candidate in segment.candidates %}
                     {% with forloop.counter0 as candidate_i %}
-                    <li class="draggable-segment">
-                        <span class="label label-success"> {{ candidate }}</span>
-                        <input type="hidden" name="segment_{{ segment_i }}_candidate_{{ candidate_i }}_rank" value="none" class="hidden-rank"/>
+                    <li class="candidate-segment">
+                        <span>
+                            {{ candidate }}
+                            <input type="hidden" name="segment_{{ segment_i }}_candidate_{{ candidate_i }}_rank" value="none" class="hidden-rank"/>
+                        </span>
                     </li>
                     {% endwith %}
                     {% endfor %}
                 </ul>
             </div>
 
-            {% for rank in ranks %}
-            <div class="rank-bin" data-rank="{{ rank }}">
-                <ul class="horizontal-list rank-list">
-                    <li class="rank-label"><span class="label label-danger ">Rank {{ rank }}</span></li>
-                </ul>
-            </div>
-            {% endfor %}
-            {% endwith %}
+            <table class="table">
+                <tbody>
+                    {% for rank in ranks %}
+                    <tr>
+                        <td>
+                            <span class="rank-label"><b>Rank {{ rank }}</b></span>
+                        </td>
+                        <td>
+                            <ul class="horizontal-list rank-list" data-rank="{{ rank }}"></ul>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% endwith %}
+                </tbody>
+            </table>
         </div>
 
         {% endfor %}
@@ -62,7 +67,7 @@
     <script type="text/javascript">
 
 function update_submit_button() {
-    if ($('.unannotated-bin .draggable-segment').length) {
+    if ($('.unannotated-bin .candidate-segment').length) {
         $('#submit-button').attr('disabled','disabled');
     } else {
         $('#submit-button').removeAttr('disabled');
@@ -70,7 +75,7 @@ function update_submit_button() {
 }
 
 function rank_update(event, ui) {
-    var rank = $(ui.item).closest('.rank-bin').data('rank');
+    var rank = $(ui.item).closest('.rank-list').data('rank');
     $(ui.item).find('.hidden-rank').val(rank);
     update_submit_button();
 }
@@ -82,8 +87,12 @@ $(document).ready(function(){
                 .sortable({
                     connectWith: $(this).find('.rank-list'),
                     containment: $(this),
-                    items: '.draggable-segment', 
+                    dropOnEmpty: true,
                     update: rank_update,
+                    tolerance: 'pointer',
+                    forcePlaceholderSize: true,
+                    placeholder: 'sortable-placeholder',
+                    revert: 100,
                     })
                 })
             .disableSelection();
