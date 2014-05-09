@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from itertools import groupby
+from segranks.utils import detokenize
 
 class RankProject(models.Model):
     name = models.CharField(max_length=20)
@@ -28,7 +30,17 @@ class Sentence(models.Model):
 class Segment(models.Model):
     sentence = models.ForeignKey(Sentence, related_name='segments')
     segment_str = models.TextField()
+    segment_indexes = models.TextField()
     candidates_str = models.TextField()
+
+    @property
+    def source_groups(self):
+        segment_indexes = set(map(int,self.segment_indexes.split(' ')))
+        source_sentence = self.sentence.source_str.split(' ')
+        for is_segment, group for groupby(enumerate(source_sentence), key=lambda x: x[0] in segment_indexes):
+            yield is_segment, detokenize([token for _,token in group])
+        
+
 
     @property
     def candidates(self):

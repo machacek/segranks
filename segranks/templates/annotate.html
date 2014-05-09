@@ -23,7 +23,16 @@
 
             <div class="panel-heading">
                 <h4>Segment {{forloop.counter}}</h4>
-                <p><b>Source:</b> {{ segment.segment_str }}</p>
+                <p>
+                    <b>Source:</b>
+                    {% for is_segment, string in segment.source_groups %}
+                        {% if is_segment %}
+                            <span class="highlighted">{{ string }}</span>
+                        {% else %}
+                            {{ string }}
+                        {% endif %}
+                    {% endfor %}
+                </p>
                 <ul class="horizontal-list rank-list unannotated-bin" data-rank="-1">
                     {% for candidate in segment.candidates %}
                     {% with forloop.counter0 as candidate_i %}

@@ -36,10 +36,11 @@ class Command(BaseCommand):
                         )
 
                 # Group segments by source segment and iterate groups
-                segments_grouped = groupby(segments, key=lambda x: x.segment_str)
-                for segment_str, segments in segments_grouped:
+                segments_grouped = groupby(segments, key=lambda x: (x.segment_str,x.segment_indexes))
+                for (segment_str, segment_indexes), segments in segments_grouped:
                     sentence.segments.create(
                             segment_str = segment_str,
+                            segment_indexes = segment_indexes,
                             candidates_str = "\n".join(segment.candidate_str for segment in segments),
                             )
 
@@ -52,13 +53,13 @@ class Command(BaseCommand):
         
         self.stdout.write("Imported %s sentences" % project.sentences.count())
 
-RowTuple = namedtuple("RowTuple", ['sentence_id', 'source_str', 'reference_str', 'segment_str', 'candidate_str'])
+RowTuple = namedtuple("RowTuple", ['sentence_id', 'source_str', 'reference_str', 'segment_str', 'candidate_str', 'segment_indexes'])
 def rows_generator(data_file):
     with codecs.open(data_file, 'r', 'utf-8') as data:
         for i, line in zip(count(1), data):
             # Process the line and unpack the values
             try:
-                sentence_id, source_str, reference_str, segment_str, candidate_str = line.strip().split('\t')
+                sentence_id, source_str, reference_str, segment_str, candidate_str, segment_indexes = line.strip().split('\t')
             except ValueError:
                 raise ValueError("Line %s has wrong number of fields" % i)
 
@@ -69,5 +70,6 @@ def rows_generator(data_file):
                     reference_str = reference_str,
                     segment_str = segment_str,
                     candidate_str = candidate_str,
+                    segment_indexes = segment_indexes,
                     )
 

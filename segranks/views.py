@@ -10,9 +10,6 @@ class AnnotateView(DetailView):
     template_name = "annotate.html"
 
     def post(self, request, *args, **kwargs):
-
-        print(request.POST['segments_number'])
-
         for i in range(int(request.POST['segments_number'])):
             segment_pk = int(request.POST["segment_%s_pk" % i])
             segment = Segment.objects.get(pk=segment_pk)
