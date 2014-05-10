@@ -37,7 +37,7 @@ class Segment(models.Model):
     def source_groups(self):
         segment_indexes = set(map(int,self.segment_indexes.split(' ')))
         source_sentence = self.sentence.source_str.split(' ')
-        for is_segment, group for groupby(enumerate(source_sentence), key=lambda x: x[0] in segment_indexes):
+        for is_segment, group in groupby(enumerate(source_sentence), key=lambda x: x[0] in segment_indexes):
             yield is_segment, detokenize([token for _,token in group])
         
 

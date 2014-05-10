@@ -56,3 +56,8 @@ ul.horizontal-list li {
 .unannotated-panel {
     padding: 0px;
 }
+
+.highlighted {
+    color: red;
+    background-color: yellow;
+}
