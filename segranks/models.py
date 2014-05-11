@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from itertools import groupby
-from segranks.utils import detokenize
 
 class RankProject(models.Model):
     name = models.CharField(max_length=20)
@@ -41,14 +40,11 @@ class Segment(models.Model):
         segment_indexes = set(map(int,self.segment_indexes.split(' ')))
         source_sentence = self.sentence.source_str.split(' ')
         for is_segment, group in groupby(enumerate(source_sentence), key=lambda x: x[0] in segment_indexes):
-            yield is_segment, detokenize([token for _,token in group], 'en')
-        
-
+            yield is_segment, ' '.join([token for _,token in group])
 
     @property
     def candidates(self):
-        for candidate in self.candidates_str.split('\n'):
-            yield detokenize(candidate.split(' '), 'cs')
+        return self.candidates_str.split('\n')
 
     def __str__(self):
         return short(self.segment_str)

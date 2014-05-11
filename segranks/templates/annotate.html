@@ -1,15 +1,17 @@
 {% extends "base.html" %}
 
+{% load detokenization %}
+
 {% block content %}
 
 <div>
     <h1>Sentence {{ sentence.pk }}</h1>
     <div class="alert alert-info alert sentence">
-        <p><b>Source:</b> {{ sentence.source_str }}</p>
+        <p><b>Source:</b> {{ sentence.source_str | detokenize:"en" }}</p>
     </div>
 
     <div class="alert alert-success sentence">
-        <p><b>Reference:</b> {{ sentence.reference_str }}</p>
+        <p><b>Reference:</b> {{ sentence.reference_str | detokenize:"cs" }}</p>
     </div>
 
     <form method="POST">
@@ -27,9 +29,9 @@
                     <b>Source:</b>
                     {% for is_segment, string in segment.source_groups %}
                         {% if is_segment %}
-                            <span class="highlighted">{{ string }}</span>
+                            <span class="highlighted">{{ string | detokenize:"en" }}</span>
                         {% else %}
-                            {{ string }}
+                            {{ string | detokenize:"en" }}
                         {% endif %}
                     {% endfor %}
                 </p>
@@ -38,7 +40,7 @@
                     {% with forloop.counter0 as candidate_i %}
                     <li class="candidate-segment">
                         <span>
-                            {{ candidate }}
+                            {{ candidate | detokenize:"cs"}}
                             <input type="hidden" name="segment_{{ segment_i }}_candidate_{{ candidate_i }}_rank" value="none" class="hidden-rank"/>
                         </span>
                     </li>
