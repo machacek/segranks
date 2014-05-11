@@ -36,15 +36,13 @@
                     {% endfor %}
                 </p>
                 <ul class="horizontal-list rank-list unannotated-bin" data-rank="-1">
-                    {% for candidate in segment.candidates %}
-                    {% with forloop.counter0 as candidate_i %}
+                    {% for candidate_i, candidate in segment.candidates %}
                     <li class="candidate-segment">
                         <span>
                             {{ candidate | detokenize:"cs"}}
                             <input type="hidden" name="segment_{{ segment_i }}_candidate_{{ candidate_i }}_rank" value="none" class="hidden-rank"/>
                         </span>
                     </li>
-                    {% endwith %}
                     {% endfor %}
                 </ul>
             </div>

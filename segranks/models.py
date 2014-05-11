@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from itertools import groupby
+import random
 
 class RankProject(models.Model):
     name = models.CharField(max_length=20)
@@ -44,7 +45,9 @@ class Segment(models.Model):
 
     @property
     def candidates(self):
-        return self.candidates_str.split('\n')
+        l = list(enumerate(self.candidates_str.split('\n')))
+        random.shuffle(l)
+        return l
 
     def __str__(self):
         return short(self.segment_str)
