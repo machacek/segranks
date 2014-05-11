@@ -102,7 +102,7 @@ LOGIN_REDIRECT_URL = '/'
 
 # Backup settings
 DBBACKUP_STORAGE = 'dbbackup.storage.dropbox_storage'
-DBBACKUP_TOKENS_FILEPATH = '/var/dropbox_tokens/tokens'
+DBBACKUP_TOKENS_FILEPATH = os.path.join(BASE_DIR, 'dropbox_tokens')
 DBBACKUP_DROPBOX_APP_KEY = 't3jf5nugzqd25dh'
 DBBACKUP_DROPBOX_APP_SECRET = 'omothpzjpvorzaz'
 DBBACKUP_DROPBOX_DIRECTORY = '/SegranksBackups/'
