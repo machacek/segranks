@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'segranks',
     'bootstrap3',
     'registration',
+    'south',
 )
 
 MIDDLEWARE_CLASSES = (
