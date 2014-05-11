@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from itertools import groupby
@@ -12,7 +13,7 @@ class RankProject(models.Model):
     class Meta:
         ordering = ['created']
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 class Sentence(models.Model):
@@ -24,7 +25,7 @@ class Sentence(models.Model):
     class Meta:
         ordering = ['sentence_id']
 
-    def __str__(self):
+    def __unicode__(self):
         return "%s: %s" % (self.sentence_id, short(self.source_str))
 
     def enumerate_segments(self):
@@ -53,7 +54,7 @@ class Segment(models.Model):
     def avialable_ranks(self):
         return list(range(1,len(self.candidates)+1))
 
-    def __str__(self):
+    def __unicode__(self):
         return short(self.segment_str)
 
 class Annotation(models.Model):
@@ -62,5 +63,5 @@ class Annotation(models.Model):
     annotator = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)    
 
-def short(str):
-    return str[:min(len(str), 80)]
+def short(string):
+    return string[:min(len(string), 80)]
