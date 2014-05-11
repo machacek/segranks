@@ -16,7 +16,7 @@
         {% csrf_token %}
         <input type="hidden" name="segments_number" value="{{ sentence.segments.count }}"/>
 
-        {% for segment in sentence.segments.all %}
+        {% for segment in sentence.sorted_segments %}
         <div class="panel panel-primary segment-annotation">
             {% with forloop.counter0 as segment_i %}
             <input type="hidden" name="segment_{{ segment_i }}_pk" value="{{ segment.pk }}" />

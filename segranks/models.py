@@ -27,6 +27,9 @@ class Sentence(models.Model):
     def __str__(self):
         return "%s: %s" % (self.sentence_id, short(self.source_str))
 
+    def sorted_segments(self):
+        return sorted(self.segments.all(), key= lambda x: int(x.segment_indexes.split(' ')[0]))
+
 class Segment(models.Model):
     sentence = models.ForeignKey(Sentence, related_name='segments')
     segment_str = models.TextField()
