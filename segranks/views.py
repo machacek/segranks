@@ -16,6 +16,9 @@ class AnnotateView(DetailView):
 
             ranks = [int(request.POST["segment_%s_candidate_%s_rank" % (i,j)]) for j in range(len(segment.candidates))]
 
+            if any(rank == 0 for rank in ranks):
+                raise ValueError("Rank is zero")
+
             segment.annotations.create(
                     ranks = " ".join(map(str, ranks)),
                     annotator = request.user,
@@ -30,11 +33,6 @@ class AnnotateView(DetailView):
                 .order_by('num_annot', '?')\
                 .first()\
                 .sentence
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(AnnotateView, self).get_context_data(**kwargs)
-        context['ranks'] = range(1,6)
-        return context
 
 class AboutView(TemplateView):
     template_name = "about.html"

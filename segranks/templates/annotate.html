@@ -18,9 +18,8 @@
         {% csrf_token %}
         <input type="hidden" name="segments_number" value="{{ sentence.segments.count }}"/>
 
-        {% for segment in sentence.sorted_segments %}
+        {% for segment_i, segment in sentence.enumerate_segments %}
         <div class="panel panel-primary segment-annotation">
-            {% with forloop.counter0 as segment_i %}
             <input type="hidden" name="segment_{{ segment_i }}_pk" value="{{ segment.pk }}" />
 
             <div class="panel-heading">
@@ -35,7 +34,7 @@
                         {% endif %}
                     {% endfor %}
                 </p>
-                <ul class="horizontal-list rank-list unannotated-bin" data-rank="-1">
+                <ul class="horizontal-list rank-list unannotated-bin" data-rank="0">
                     {% for candidate_i, candidate in segment.candidates %}
                     <li class="candidate-segment">
                         <span>
@@ -49,7 +48,7 @@
 
             <table class="table">
                 <tbody>
-                    {% for rank in ranks %}
+                    {% for rank in segment.avialable_ranks %}
                     <tr>
                         <td>
                             <span class="rank-label"><b>Rank {{ rank }}</b></span>
@@ -59,11 +58,17 @@
                         </td>
                     </tr>
                     {% endfor %}
-                    {% endwith %}
+                    <tr>
+                        <td>
+                            <span class="rank-label"><b>Garbage</b></span>
+                        </td>
+                        <td>
+                            <ul class="horizontal-list rank-list" data-rank="-1"></ul>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
-
         {% endfor %}
 
         <div class="alert alert-success">

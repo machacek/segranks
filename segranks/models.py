@@ -27,8 +27,8 @@ class Sentence(models.Model):
     def __str__(self):
         return "%s: %s" % (self.sentence_id, short(self.source_str))
 
-    def sorted_segments(self):
-        return sorted(self.segments.all(), key= lambda x: int(x.segment_indexes.split(' ')[0]))
+    def enumerate_segments(self):
+        return enumerate(sorted(self.segments.all(), key= lambda x: int(x.segment_indexes.split(' ')[0])))
 
 class Segment(models.Model):
     sentence = models.ForeignKey(Sentence, related_name='segments')
@@ -48,6 +48,10 @@ class Segment(models.Model):
         l = list(enumerate(self.candidates_str.split('\n')))
         random.shuffle(l)
         return l
+
+    @property
+    def avialable_ranks(self):
+        return list(range(1,len(self.candidates)+1))
 
     def __str__(self):
         return short(self.segment_str)
