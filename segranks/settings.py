@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'segranks',
     'bootstrap3',
     'registration',
+    'dbbackup',
     'south',
 )
 
@@ -85,3 +86,10 @@ STATIC_URL = '/static/'
 ACCOUNT_ACTIVATION_DAYS = 7
 
 LOGIN_REDIRECT_URL = '/'
+
+# Backup settings
+DBBACKUP_STORAGE = 'dbbackup.storage.dropbox_storage'
+DBBACKUP_TOKENS_FILEPATH = '/var/dropbox_tokens/tokens'
+DBBACKUP_DROPBOX_APP_KEY = 't3jf5nugzqd25dh'
+DBBACKUP_DROPBOX_APP_SECRET = 'omothpzjpvorzaz'
+DBBACKUP_DROPBOX_DIRECTORY = '/SegranksBackups/'
