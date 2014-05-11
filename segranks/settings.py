@@ -27,6 +27,10 @@ TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = []
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get('POSTMARK_SMTP_SERVER')
+EMAIL_PORT = 25
+EMAIL_HOST_USER = os.environ.get('POSTMARK_API_KEY')
+EMAIL_HOST_PASSWORD = os.environ.get('POSTMARK_API_KEY')
 
 # Application definition
 
