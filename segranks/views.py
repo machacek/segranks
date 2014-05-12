@@ -37,3 +37,8 @@ class AnnotateView(DetailView):
 class AboutView(TemplateView):
     template_name = "about.html"
 
+# This is a hack to fix the bug in django-registration
+from registration.backends.simple.views import RegistrationView as SimpleRegistrationView
+class RegistrationView(SimpleRegistrationView):
+    def get_success_url(self, request, user):
+        return ('/', (), {})
