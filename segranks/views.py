@@ -41,12 +41,10 @@ class AnnotateView(DetailView):
         pass
     
     def get_object(self):
-        return Segment.objects\
-                .filter(sentence__project__pk = self.kwargs['pk'])\
-                .annotate(num_annot=Count('annotations'))\
-                .order_by('num_annot', '?')\
+        return Sentence.objects\
+                .filter(project__pk = self.kwargs['pk'])\
+                .order_by('annotated_counter', '?')\
                 .first()\
-                .sentence
 
 class AboutView(TemplateView):
     template_name = "about.html"
