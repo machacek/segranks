@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView, DetailView, ListView, View
-from django.db.models import Count
+from django.db.models import Count, F
 from segranks.models import RankProject, Segment, Sentence
 from django.shortcuts import redirect
 import random
@@ -23,6 +23,11 @@ class SubmitView(View):
                     ranks = " ".join(map(str, ranks)),
                     annotator = request.user,
                     )
+
+        # Increment sentence's annotated counter
+        sentence = segment.sentence
+        sentence.annotated_counter = F('annotated_counter') + 1 
+        sentence.save()
 
         return redirect("segranks.views.annotateview", pk)
 
