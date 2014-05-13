@@ -33,7 +33,7 @@
         <p>{{ sentence.reference_str | detokenize:"cs" }}</p>
     </div>
 
-    <form method="POST">
+    <form method="POST" action="{% url 'segranks.views.submitview' pk=object.project.pk %}">
         {% csrf_token %}
         <input type="hidden" name="segments_number" value="{{ sentence.segments.count }}"/>
 

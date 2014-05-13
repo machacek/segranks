@@ -1,15 +1,15 @@
-from django.views.generic import TemplateView, DetailView, ListView
+from django.views.generic import TemplateView, DetailView, ListView, View
 from django.db.models import Count
 from segranks.models import RankProject, Segment, Sentence
+from django.shortcuts import redirect
+import random
 
 class ProjectListView(ListView):
     model = RankProject
     template_name = "project_list.html"
 
-class AnnotateView(DetailView):
-    template_name = "annotate.html"
-
-    def post(self, request, *args, **kwargs):
+class SubmitView(View):
+    def post(self, request, pk):
         for i in range(int(request.POST['segments_number'])):
             segment_pk = int(request.POST["segment_%s_pk" % i])
             segment = Segment.objects.get(pk=segment_pk)
@@ -24,7 +24,16 @@ class AnnotateView(DetailView):
                     annotator = request.user,
                     )
 
-        return self.get(request, *args, **kwargs)
+        return redirect("segranks.views.annotateview", pk)
+
+class AnnotateView(DetailView):
+    template_name = "annotate.html"
+
+    def get_intra_object(self):
+        pass
+
+    def get_inter_object(self):
+        pass
     
     def get_object(self):
         return Segment.objects\
