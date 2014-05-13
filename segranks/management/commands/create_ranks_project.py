@@ -9,13 +9,12 @@ class Command(BaseCommand):
     help = 'Creates new RanksProject and loads givet data file into database'
 
     def handle(self, *args, **options):
-        name, data_file, description, instruction = args
+        data_file, name, description = args
 
         self.stdout.write("Creating project...")
         project = RankProject(
                 name=name,
                 description=description,
-                instructions=instruction,
                 )
         project.save()
 

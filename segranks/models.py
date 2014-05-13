@@ -7,7 +7,6 @@ import random
 class RankProject(models.Model):
     name = models.CharField(max_length=20)
     description = models.TextField()
-    instructions = models.TextField()
     created = models.DateTimeField(auto_now_add=True, editable=False)
 
     class Meta:
