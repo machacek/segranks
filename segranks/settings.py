@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'segranks',
     'bootstrap3',
     'registration',
+    'django_extensions',
     'dbbackup',
     'south',
 )
