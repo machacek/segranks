@@ -6,13 +6,13 @@
 
 <div class="jumbotron">
     <div class="container">
-        <h1>Registration</h1>
+        <h1>Registrace</h1>
         <form method="post" class="form">
             {% csrf_token %}
             {% bootstrap_form form %}
             {% buttons %}
             <button type="submit" class="btn btn-primary">
-                {% bootstrap_icon "star" %} Register
+                {% bootstrap_icon "star" %} Registrovat
             </button>
             {% endbuttons %}
         </form>

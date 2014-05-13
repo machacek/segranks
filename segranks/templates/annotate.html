@@ -5,13 +5,26 @@
 {% block content %}
 
 <div>
-    <h1>Sentence {{ sentence.pk }}</h1>
-    <div class="alert alert-info alert sentence">
-        <p><b>Source:</b> {{ sentence.source_str | detokenize:"en" }}</p>
+    <h1>Věta {{ sentence.pk }}</h1>
+    
+    <div class="alert alert-info sentence">
+        <h3>Instrukce</h3>
+
+        <p>Pro danou zdrojovou větu je vybráno několik segmentů. U každého z
+        těchto segmentů vidíte několik překladů. Vaším úkolem je seřadit tyto
+        překlady od nejlepšího po nejhorší. Lepší překlady umístěte na výše,
+        horší níže. Pokud jsou některé překlady stejně kvalitní, umístěte je na
+        stejnou pozici. Překlady, které nedávají žádný smysl a které se nedají
+        navzájem porovnat, umístěte na pozici "Odpad".</p>
+
     </div>
 
     <div class="alert alert-success sentence">
-        <p><b>Reference:</b> {{ sentence.reference_str | detokenize:"cs" }}</p>
+        <h3>Zdrojová věta</h3>
+        <p>{{ sentence.source_str | detokenize:"en" }}</p>
+
+        <h3>Referenční překlad</h3>
+        <p>{{ sentence.reference_str | detokenize:"cs" }}</p>
     </div>
 
     <form method="POST">
@@ -23,12 +36,12 @@
             <input type="hidden" name="segment_{{ segment_i }}_pk" value="{{ segment.pk }}" />
 
             <div class="panel-heading">
-                <h4>Segment {{forloop.counter}}</h4>
+                <h3>Segment {{forloop.counter}}</h3>
                 <p>
-                    <b>Source:</b>
                     {% for is_segment, string in segment.source_groups %}
                         {% if is_segment %}
-                            <span class="highlighted">{{ string | detokenize:"en" }}</span>
+                        <!--<span class="highlighted">{{ string | detokenize:"en" }}</span>-->
+                        <b class="highlighted">{{ string | detokenize:"en" }}</b>
                         {% else %}
                             {{ string | detokenize:"en" }}
                         {% endif %}
@@ -50,20 +63,36 @@
                 <tbody>
                     {% for rank in segment.avialable_ranks %}
                     <tr>
-                        <td>
-                            <span class="rank-label"><b>Rank {{ rank }}</b></span>
+                        <td align="right">
+                            <span>
+                                <b>
+                                    Rank {{ rank }}
+                                </b>
+                            </span>
                         </td>
-                        <td>
+                        <td class="rank-list-cell">
+                            {% comment %}
+                            {% if forloop.first %}
+                            <span class="bgtext">
+                                <b>Nejlepší</b>
+                            </span>
+                            {% endif %}
+                            {% if forloop.last %}
+                            <span class="bgtext">
+                                <b>Nejhorší</b>
+                            </span>
+                            {% endif %}
+                            {% endcomment %}
                             <ul class="horizontal-list rank-list" data-rank="{{ rank }}"></ul>
                         </td>
                     </tr>
                     {% endfor %}
                     <tr>
                         <td>
-                            <span class="rank-label"><b>Garbage</b></span>
+                            <span class="rank-label"><b>Odpad</b></span>
                         </td>
                         <td>
-                            <ul class="horizontal-list rank-list" data-rank="-1"></ul>
+                            <ul class="horizontal-list rank-list" data-rank="100"></ul>
                         </td>
                     </tr>
                 </tbody>
@@ -73,7 +102,7 @@
 
         <div class="alert alert-success">
             <button id="submit-button" type="submit" class="btn btn-primary">
-                <span class="glyphicon glyphicon-cloud-upload"></span> Submit
+                Odevzdat <span class="glyphicon glyphicon-cloud-upload"></span>
             </button>
         </div>
     </form>

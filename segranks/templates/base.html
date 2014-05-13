@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Annotate</title>
+    <title>SegRanks</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% bootstrap_css %}
     <link rel="stylesheet" href="{% static "adjustments.css" %}" type="text/css" media="screen" />
@@ -23,10 +23,10 @@
             <!--<li><a href="{% url 'segranks.views.projectlistview' %}">Home</a></li>-->
             <!--<li><a href="{% url 'segranks.views.aboutview' %}">About</a></li>-->
             {% if user.is_authenticated %}
-            <li><a href="{% url 'auth_logout' %}">Logout {{ user.username }}</a></li>
+            <li><a href="{% url 'auth_logout' %}">Odhlásit {{ user.username }}</a></li>
             {% else %}
-            <li><a href="{% url 'registration_register' %}">Register</a></li>
-            <li><a href="{% url 'auth_login' %}">Login</a></li>
+            <li><a href="{% url 'registration_register' %}">Registrace</a></li>
+            <li><a href="{% url 'auth_login' %}">Přihlášení</a></li>
             {% endif %}
         </ul>
     </div>
