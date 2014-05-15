@@ -2,7 +2,8 @@ from django.views.generic import TemplateView, DetailView, ListView, View
 from django.db.models import Count, F
 from segranks.models import RankProject, Segment, Sentence
 from django.shortcuts import redirect
-import random
+from datetime import datetime, timedelta
+from select_pdf import ProbabilityDistribution
 
 class ProjectListView(ListView):
     model = RankProject
@@ -24,27 +25,51 @@ class SubmitView(View):
                     annotator = request.user,
                     )
 
-        # Increment sentence's annotated counter
-        sentence = segment.sentence
-        sentence.annotated_counter = F('annotated_counter') + 1 
-        sentence.save()
-
         return redirect("segranks.views.annotateview", pk)
+
+
+intra_rate = 0.3
+inter_rate = 0.3
+normal_rate = 1 - (intra_rate + inter_rate)
 
 class AnnotateView(DetailView):
     template_name = "annotate.html"
 
-    def get_intra_object(self):
-        pass
-
-    def get_inter_object(self):
-        pass
-    
-    def get_object(self):
+    def annotated_once_by_others(self):
         return Sentence.objects\
-                .filter(project__pk = self.kwargs['pk'])\
-                .order_by('annotated_counter', '?')\
-                .first()\
+                .filter(project__pk=self.kwargs['pk'])\
+                .exclude(segments__annotations__annotator=self.request.user)\
+                .annotate(n_segments=Count('segments'), n_annotations=Count('segments__annotations'))\
+                .filter(n_segments=F('n_annotations'))\
+                .distinct()\
+                .order_by('?')[0]
+
+    def annotated_once_by_me(self):
+        return Sentence.objects\
+                .filter(project__pk=self.kwargs['pk'], segments__annotations__annotator=self.request.user)\
+                .filter(segments__annotations__created__lte=(datetime.now() - timedelta(seconds=12)))\
+                .annotate(n_segments=Count('segments'), n_annotations=Count('segments__annotations'))\
+                .filter(n_segments=F('n_annotations'))\
+                .distinct()\
+                .order_by('?')[0]
+
+    def not_annotated(self):
+        return Sentence.objects\
+                .filter(project__pk=self.kwargs['pk'], segments__annotations__annotator=None)\
+                .distinct()\
+                .order_by('?')[0]
+        
+    def get_object(self):
+        random_method = ProbabilityDistribution([
+                (intra_rate, self.annotated_once_by_me),
+                (inter_rate, self.annotated_once_by_others),
+                (normal_rate, self.not_annotated),
+            ]).random_choice()
+
+        try:
+            return random_method()
+        except IndexError:
+            return self.not_annotated()
 
 class AboutView(TemplateView):
     template_name = "about.html"

@@ -20,7 +20,6 @@ class Sentence(models.Model):
     sentence_id = models.IntegerField()
     source_str = models.TextField()
     reference_str = models.TextField()
-    annotated_counter = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['sentence_id']
