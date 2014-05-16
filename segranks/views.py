@@ -28,45 +28,32 @@ class SubmitView(View):
         return redirect("segranks.views.annotateview", pk)
 
 
-intra_rate = 0.3
-inter_rate = 0.3
-normal_rate = 1 - (intra_rate + inter_rate)
+intra_rate = 0.05
+inter_rate = 0.05
 
 class AnnotateView(DetailView):
     template_name = "annotate.html"
 
-    def annotated_once_by_others(self):
-        return Sentence.objects\
-                .filter(project__pk=self.kwargs['pk'])\
-                .exclude(segments__annotations__annotator=self.request.user)\
-                .annotate(n_segments=Count('segments'), n_annotations=Count('segments__annotations'))\
-                .filter(n_segments=F('n_annotations'))\
-                .distinct()[0]
-
-    def annotated_once_by_me(self):
-        return Sentence.objects\
-                .filter(project__pk=self.kwargs['pk'], segments__annotations__annotator=self.request.user)\
-                .filter(segments__annotations__created__lte=(datetime.now() - timedelta(seconds=12)))\
-                .annotate(n_segments=Count('segments'), n_annotations=Count('segments__annotations'))\
-                .filter(n_segments=F('n_annotations'))\
-                .distinct()[0]
-
-    def not_annotated(self):
-        return Sentence.objects\
-                .filter(project__pk=self.kwargs['pk'], segments__annotations__annotator=None)\
-                .distinct()[0]
+    def get_unannotated(self):
+        pass
         
     def get_object(self):
-        random_method = ProbabilityDistribution([
-                (intra_rate, self.annotated_once_by_me),
-                (inter_rate, self.annotated_once_by_others),
-                (normal_rate, self.not_annotated),
-            ]).random_choice()
+        project = self.kwargs['pk']
+        user = self.request.user
+
+        annotated = Sentence.annotated_by_me(project, user).count()
+        annotated_inter = Sentence.annotated_by_me_and_others(project, user).count()
+        annotated_intra = Sentence.annotated_by_me_at_least_twice(project, user).count()
+
+        
+
 
         try:
-            return random_method()
+            pass
         except IndexError:
-            return self.not_annotated()
+            pass
+
+
 
 class AboutView(TemplateView):
     template_name = "about.html"

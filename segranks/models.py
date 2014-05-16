@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from itertools import groupby
+from django.db.models import Avg, Count, F, Max, Min, Sum, Q
 import random
 
 class RankProject(models.Model):
@@ -29,6 +30,57 @@ class Sentence(models.Model):
 
     def enumerate_segments(self):
         return enumerate(sorted(self.segments.all(), key= lambda x: int(x.segment_indexes.split(' ')[0])))
+
+    @classmethod
+    def annotated_by_me(cls, project, user):
+        return cls.objects\
+                .filter(project=project)\
+                .filter(segments__annotations__annotator=user)\
+                .distinct()
+    
+    @classmethod
+    def annotated_by_others(cls, project, user):
+        others = User.objects.exclude(pk=user.pk)
+        return cls.objects\
+                .filter(project=project)\
+                .filter(segments__annotations__annotator__in=others)\
+                .distinct()
+    
+    @classmethod
+    def annotated_only_by_me(cls, project, user):
+        return cls.annotated_by_me(project, user)\
+                .exclude(pk__in=cls.annotated_by_others(project, user))
+    
+    @classmethod
+    def annotated_only_by_others(cls, project, user):
+        return cls.annotated_by_others(project, user)\
+                .exclude(pk__in=cls.annotated_by_me(project, user))
+    
+    @classmethod
+    def annotated_by_me_and_others(cls, project, user):
+        return cls.annotated_by_me(project, user)\
+                .filter(pk__in=cls.annotated_by_others(project, user))
+
+    @classmethod
+    def annotated_by_me_at_least_twice(cls, project, user):
+        return cls.annotated_by_me(project, user)\
+                .annotate(n_segments=Count('segments', distinct=True), n_annotations=Count('segments__annotations', distinct=True))\
+                .filter(n_annotations__gt=F('n_segments'))\
+                .distinct()
+    
+    @classmethod
+    def annotated_by_me_once(cls, project, user):
+        return cls.annotated_by_me(project, user)\
+                .annotate(n_segments=Count('segments', distinct=True), n_annotations=Count('segments__annotations', distinct=True))\
+                .filter(n_annotations__lte=F('n_segments'))\
+                .distinct()
+    
+    @classmethod
+    def unannotated(cls, project):
+        return cls.objects.filter(project__pk=self.kwargs['pk'], segments__annotations__annotator=None)
+
+
+
 
 class Segment(models.Model):
     sentence = models.ForeignKey(Sentence, related_name='segments')
