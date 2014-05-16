@@ -54,7 +54,7 @@
                     {% endfor %}
                 </p>
                 <ul class="horizontal-list rank-list unannotated-bin" data-rank="0">
-                    {% for candidate_i, candidate in segment.candidates %}
+                    {% for candidate_i, candidate in segment.enum_candidates %}
                     <li class="candidate-segment">
                         <span>
                             {{ candidate | detokenize:"cs"}}

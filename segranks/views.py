@@ -21,7 +21,7 @@ class SubmitView(View):
                 raise ValueError("Rank is zero")
 
             segment.annotations.create(
-                    ranks = " ".join(map(str, ranks)),
+                    ranks = ranks,
                     annotator = request.user,
                     )
 

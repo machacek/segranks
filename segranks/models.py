@@ -45,6 +45,9 @@ class Segment(models.Model):
 
     @property
     def candidates(self):
+        return self.candidates_str.split('\n')
+    
+    def enum_candidates(self):
         l = list(enumerate(self.candidates_str.split('\n')))
         random.shuffle(l)
         return l
@@ -58,9 +61,18 @@ class Segment(models.Model):
 
 class Annotation(models.Model):
     annotated_segment = models.ForeignKey(Segment, related_name='annotations')
-    ranks = models.TextField()
+    ranks_str = models.TextField()
     annotator = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)    
+
+    @property
+    def ranks(self):
+        return list(map(int, self.ranks_str.split(' ')))
+
+    @ranks.setter
+    def ranks(self, value):
+        self.ranks_str = ' '.join(map(str, map(int,value)))
+
 
 def short(string):
     return string[:min(len(string), 80)]

@@ -19,4 +19,5 @@ pystache==0.5.3
 regex==2014.04.10
 six==1.6.1
 static==1.0.2
+tabulate==0.7.2
 wsgiref==0.1.2
