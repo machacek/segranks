@@ -4,6 +4,10 @@ from segranks.models import RankProject, Sentence, Segment
 from itertools import count, groupby
 from collections import namedtuple
 from tabulate import tabulate
+import codecs
+import sys
+
+sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
 
 class Command(BaseCommand):
     args = 'project_name'
