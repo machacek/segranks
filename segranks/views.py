@@ -41,8 +41,7 @@ class AnnotateView(DetailView):
                 .exclude(segments__annotations__annotator=self.request.user)\
                 .annotate(n_segments=Count('segments'), n_annotations=Count('segments__annotations'))\
                 .filter(n_segments=F('n_annotations'))\
-                .distinct()\
-                .order_by('?')[0]
+                .distinct()[0]
 
     def annotated_once_by_me(self):
         return Sentence.objects\
@@ -50,14 +49,12 @@ class AnnotateView(DetailView):
                 .filter(segments__annotations__created__lte=(datetime.now() - timedelta(seconds=12)))\
                 .annotate(n_segments=Count('segments'), n_annotations=Count('segments__annotations'))\
                 .filter(n_segments=F('n_annotations'))\
-                .distinct()\
-                .order_by('?')[0]
+                .distinct()[0]
 
     def not_annotated(self):
         return Sentence.objects\
                 .filter(project__pk=self.kwargs['pk'], segments__annotations__annotator=None)\
-                .distinct()\
-                .order_by('?')[0]
+                .distinct()[0]
         
     def get_object(self):
         random_method = ProbabilityDistribution([
