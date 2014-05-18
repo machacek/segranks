@@ -4,6 +4,7 @@ from segranks.models import RankProject, Segment, Sentence
 from django.shortcuts import redirect
 from datetime import datetime, timedelta
 from select_pdf import ProbabilityDistribution
+import os
 
 class ProjectListView(ListView):
     model = RankProject
@@ -28,14 +29,11 @@ class SubmitView(View):
         return redirect("segranks.views.annotateview", pk)
 
 
-intra_rate = 0.05
-inter_rate = 0.05
+intra_rate = float(os.getenv('SEGRANKS_INTRA_RATE', 0.05))
+inter_rate = float(os.getenv('SEGRANKS_INTER_RATE', 0.05))
 
 class AnnotateView(DetailView):
     template_name = "annotate.html"
-
-    def get_unannotated(self):
-        pass
         
     def get_object(self):
         project = self.kwargs['pk']
@@ -45,14 +43,19 @@ class AnnotateView(DetailView):
         annotated_inter = Sentence.annotated_by_me_and_others(project, user).count()
         annotated_intra = Sentence.annotated_by_me_at_least_twice(project, user).count()
 
-        
+        if annotated_intra < int(intra_rate * annotated):
+            try:
+                return Sentence.random(Sentence.annotated_by_me_once(project, user))
+            except IndexError:
+                pass
 
+        if annotated_inter < int(inter_rate * annotated):
+            try:
+                return Sentence.random(Sentence.annotated_only_by_others(project, user))
+            except IndexError:
+                pass
 
-        try:
-            pass
-        except IndexError:
-            pass
-
+        return Sentence.random(Sentence.unannotated(project))
 
 
 class AboutView(TemplateView):

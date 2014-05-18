@@ -77,8 +77,11 @@ class Sentence(models.Model):
     
     @classmethod
     def unannotated(cls, project):
-        return cls.objects.filter(project__pk=self.kwargs['pk'], segments__annotations__annotator=None)
+        return cls.objects.filter(project__pk=project, segments__annotations__annotator=None)
 
+    @classmethod
+    def random(cls, in_query):
+        return cls.objects.filter(pk__in=in_query).order_by('?')[0]
 
 
 
