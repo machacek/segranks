@@ -29,11 +29,8 @@ def statistics(project):
         annotated = Sentence.annotated_by_me(project, user).count()
         annotated_inter = Sentence.annotated_by_me_and_others(project, user).count()
         annotated_intra = Sentence.annotated_by_me_at_least_twice(project, user).count()
-        yield user.username, annotated, annotated_intra/annotated, intra_agreement(project, user), annotated_inter/annotated, inter_agreement(project, user)
+        yield user.username, annotated, safe_div(annotated_intra,annotated), intra_agreement(project, user), safe_div(annotated_inter,annotated), inter_agreement(project, user)
     yield overall_statistics(project)
-
-def overall_statistics(project):
-    annotated = Sentence.annotated_by_others(project, None)
 
 
 def inter_agreement(project, user):
@@ -49,7 +46,33 @@ def inter_agreement(project, user):
 
 def intra_agreement(project, user):
     agree, all = 0, 0
+    for sentence in Sentence.annotated_by_me(project, user):
+        for segment in sentence.segments.all():
+            for annot_1, annot_2 in combinations(segment.annotations.filter(annotator=user), 2):
+                agree_inc, all_inc = agrees_all(annot_1, annot_2)
+                agree += agree_inc
+                all += all_inc
     return kappa(agree, all)
+
+def overall_statistics(project):
+    annotated = Sentence.objects.filter(project=project).exclude(segments__annotations=None).distinct().count()
+    intra_agree, intra_all = 0, 0
+    inter_agree, inter_all = 0, 0
+
+    for segment in Segment.objects.filter(sentence__project=project).select_related('annotations').distinct():
+        for annot_1, annot_2 in combinations(segment.annotations.all(), 2):
+            agree_inc, all_inc = agrees_all(annot_1, annot_2)
+            if annot_1.annotator == annot_2.annotator:
+                intra_agree += agree_inc
+                intra_all   += all_inc
+            else:
+                inter_agree += agree_inc
+                inter_all   += all_inc
+
+    intra_kappa = kappa(intra_agree, intra_all)
+    inter_kappa = kappa(inter_agree, inter_all)
+
+    return "total", annotated, None, intra_kappa, None, inter_kappa
 
 def agrees_all(annot_1, annot_2):
     all = 0
@@ -68,5 +91,11 @@ def kappa(agree, all):
         P_A = agree / all
         P_E = 1/3 # is it?
         return (P_A - P_E) / (1 - P_E)
+    except ZeroDivisionError:
+        return None
+
+def safe_div(nominator, denominator):
+    try:
+        return nominator / denominator
     except ZeroDivisionError:
         return None
