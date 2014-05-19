@@ -5,6 +5,7 @@ from django.shortcuts import redirect
 from datetime import datetime, timedelta
 from select_pdf import ProbabilityDistribution
 import os
+import time
 
 class ProjectListView(ListView):
     model = RankProject
@@ -12,7 +13,10 @@ class ProjectListView(ListView):
 
 class SubmitView(View):
     def post(self, request, pk):
-        for i in range(int(request.POST['segments_number'])):
+        time_generated = int(request.POST['time_generated'])
+        time_now = int(time.time())
+        segments_number = int(request.POST['segments_number'])
+        for i in range(segments_number):
             segment_pk = int(request.POST["segment_%s_pk" % i])
             segment = Segment.objects.get(pk=segment_pk)
 
@@ -24,6 +28,7 @@ class SubmitView(View):
             segment.annotations.create(
                     ranks = ranks,
                     annotator = request.user,
+                    time_in_seconds = int((time_now - time_generated) / segments_number),
                     )
 
         return redirect("segranks.views.annotateview", pk)

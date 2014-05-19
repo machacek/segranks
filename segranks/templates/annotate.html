@@ -36,6 +36,7 @@
     <form method="POST" action="{% url 'segranks.views.submitview' pk=object.project.pk %}">
         {% csrf_token %}
         <input type="hidden" name="segments_number" value="{{ sentence.segments.count }}"/>
+        <input type="hidden" name="time_generated" value="{{ sentence.time_generated }}"/>
 
         {% for segment_i, segment in sentence.enumerate_segments %}
         <div class="panel panel-primary segment-annotation">

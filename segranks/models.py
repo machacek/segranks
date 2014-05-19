@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from itertools import groupby
 from django.db.models import Avg, Count, F, Max, Min, Sum, Q
 import random
+import time
 
 class RankProject(models.Model):
     name = models.CharField(max_length=20)
@@ -30,6 +31,9 @@ class Sentence(models.Model):
 
     def enumerate_segments(self):
         return enumerate(sorted(self.segments.all(), key= lambda x: int(x.segment_indexes.split(' ')[0])))
+
+    def time_generated(self):
+        return int(time.time())
 
     @classmethod
     def annotated_by_me(cls, project, user):
@@ -119,6 +123,7 @@ class Annotation(models.Model):
     ranks_str = models.TextField()
     annotator = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)    
+    time_in_seconds = models.IntegerField()
 
     @property
     def ranks(self):
