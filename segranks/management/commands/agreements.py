@@ -18,18 +18,23 @@ class Command(BaseCommand):
         project = RankProject.objects.get(pk=int(args[0]))
 
         print(tabulate(
-            tabular_data = user_statistics(project),
+            tabular_data = statistics(project),
             tablefmt = 'plain',
             headers = 'firstrow'
         ))
 
-def user_statistics(project):
+def statistics(project):
     yield "name", "annotated", "rate-intra", "agr-intra", "rate-inter", "agr-inter"
     for user in User.objects.all():
         annotated = Sentence.annotated_by_me(project, user).count()
         annotated_inter = Sentence.annotated_by_me_and_others(project, user).count()
         annotated_intra = Sentence.annotated_by_me_at_least_twice(project, user).count()
         yield user.username, annotated, annotated_intra/annotated, intra_agreement(project, user), annotated_inter/annotated, inter_agreement(project, user)
+    yield overall_statistics(project)
+
+def overall_statistics(project):
+    annotated = Sentence.annotated_by_others(project, None)
+
 
 def inter_agreement(project, user):
     agree, all = 0, 0
