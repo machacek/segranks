@@ -46,12 +46,6 @@ def intra_agreement(project, user):
     agree, all = 0, 0
     return kappa(agree, all)
 
-def kappa(agree, all)
-    P_A = agree / all
-    P_E = 1/3 # is it?
-    return = (P_A - P_E) / (1 - P_E)
-
-
 def agrees_all(annot_1, annot_2):
     all = 0
     agree = 0
@@ -64,5 +58,10 @@ def agrees_all(annot_1, annot_2):
         all += 1
     return agree, all
         
-                
-
+def kappa(agree, all):
+    try:
+        P_A = agree / all
+        P_E = 1/3 # is it?
+        return (P_A - P_E) / (1 - P_E)
+    except ZeroDivisionError:
+        return None
