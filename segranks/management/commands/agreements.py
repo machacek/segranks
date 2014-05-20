@@ -1,12 +1,14 @@
 from __future__ import print_function, division
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import User
-from segranks.models import RankProject, Sentence, Segment
+from segranks.models import RankProject, Sentence, Segment, Annotation
+from django.db.models import Sum, Avg
 from itertools import count, groupby, combinations
 from collections import namedtuple
 from tabulate import tabulate
 import codecs
 import sys
+import datetime
 
 sys.stdout = codecs.getwriter("utf-8")(sys.stdout)
 
@@ -24,12 +26,25 @@ class Command(BaseCommand):
         ))
 
 def statistics(project):
-    yield "name", "annotated", "rate-intra", "agr-intra", "rate-inter", "agr-inter"
+    yield "name", "sentences", "annot-intra", "agree-intra", "annot-inter", "agree-inter", "annotations", "time", "per-annotation"
     for user in User.objects.all():
         annotated = Sentence.annotated_by_me(project, user).count()
         annotated_inter = Sentence.annotated_by_me_and_others(project, user).count()
         annotated_intra = Sentence.annotated_by_me_at_least_twice(project, user).count()
-        yield user.username, annotated, safe_div(annotated_intra,annotated), intra_agreement(project, user), safe_div(annotated_inter,annotated), inter_agreement(project, user)
+
+        annotations = Annotation.objects.filter(annotator=user).count()
+        times = Annotation.objects.filter(annotator=user, time_in_seconds__lt=600)\
+                .aggregate(
+                        sum=Sum('time_in_seconds'),
+                        avg=Avg('time_in_seconds'),
+                        )
+        try:
+            time_sum = str(datetime.timedelta(seconds=times['sum']))
+            time_avg = str(datetime.timedelta(seconds=times['avg']))
+        except:
+            time_sum, time_avg = None, None
+
+        yield user.username, annotated, safe_div(annotated_intra,annotated), intra_agreement(project, user), safe_div(annotated_inter,annotated), inter_agreement(project, user), annotations, time_sum, time_avg
     yield overall_statistics(project)
 
 
@@ -71,8 +86,20 @@ def overall_statistics(project):
 
     intra_kappa = kappa(intra_agree, intra_all)
     inter_kappa = kappa(inter_agree, inter_all)
+        
+    annotations = Annotation.objects.count()
+    times = Annotation.objects.filter(time_in_seconds__lt=600)\
+            .aggregate(
+                    sum=Sum('time_in_seconds'),
+                    avg=Avg('time_in_seconds'),
+                    )
+    try:
+        time_sum = str(datetime.timedelta(seconds=times['sum']))
+        time_avg = str(datetime.timedelta(seconds=times['avg']))
+    except:
+        time_sum, time_avg = None, None
 
-    return "total", annotated, None, intra_kappa, None, inter_kappa
+    return "total", annotated, None, intra_kappa, None, inter_kappa, annotations, time_sum, time_avg
 
 def agrees_all(annot_1, annot_2):
     all = 0
