@@ -32,8 +32,9 @@ def statistics(project):
         annotated_inter = Sentence.annotated_by_me_and_others(project, user).count()
         annotated_intra = Sentence.annotated_by_me_at_least_twice(project, user).count()
 
-        annotations = Annotation.objects.filter(annotator=user).count()
-        times = Annotation.objects.filter(annotator=user, time_in_seconds__lt=600)\
+        annotations = Annotation.objects.filter(annotated_segment__sentence__project=project, annotator=user).count()
+        times = Annotation.objects\
+                .filter(annotated_segment__sentence__project=project, annotator=user, time_in_seconds__lt=600)\
                 .aggregate(
                         sum=Sum('time_in_seconds'),
                         avg=Avg('time_in_seconds'),
@@ -87,8 +88,9 @@ def overall_statistics(project):
     intra_kappa = kappa(intra_agree, intra_all)
     inter_kappa = kappa(inter_agree, inter_all)
         
-    annotations = Annotation.objects.count()
-    times = Annotation.objects.filter(time_in_seconds__lt=600)\
+    annotations = Annotation.objects.filter(annotated_segment__sentence__project=project).count()
+    times = Annotation.objects\
+            .filter(annotated_segment__sentence__project=project, time_in_seconds__lt=600)\
             .aggregate(
                     sum=Sum('time_in_seconds'),
                     avg=Avg('time_in_seconds'),
