@@ -41,9 +41,10 @@ def statistics(project):
                         )
         try:
             time_sum = str(datetime.timedelta(seconds=times['sum']))
-            time_avg = str(datetime.timedelta(seconds=times['avg']))
         except:
-            time_sum, time_avg = None, None
+            time_sum = None
+        
+        time_avg = int(times['avg'])
 
         yield user.username, annotated, safe_div(annotated_intra,annotated), intra_agreement(project, user), safe_div(annotated_inter,annotated), inter_agreement(project, user), annotations, time_sum, time_avg
     yield overall_statistics(project)
