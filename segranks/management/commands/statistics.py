@@ -97,7 +97,7 @@ def overall_statistics(project):
                     )
     try:
         time_sum = str(datetime.timedelta(seconds=times['sum']))
-        time_avg = str(datetime.timedelta(seconds=times['avg']))
+        time_avg = int(times['avg'])
     except:
         time_sum, time_avg = None, None
 
