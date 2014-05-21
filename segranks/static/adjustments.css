@@ -61,3 +61,22 @@ ul.horizontal-list li {
     color: red;
     background-color: yellow;
 }
+
+.rank-cell {
+    position: relative;
+}
+
+.bgtext {
+    position: absolute;
+    top: 30px;
+    left: 13px;
+    font-size: 9pt; 
+}
+
+.nejlepsi {
+    color: green;
+}
+
+.nejhorsi {
+    color: red;
+}

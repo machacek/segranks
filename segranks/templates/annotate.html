@@ -70,25 +70,25 @@
                 <tbody>
                     {% for rank in segment.avialable_ranks %}
                     <tr>
-                        <td align="right">
+                        <td align="right" class="rank-cell">
                             <span>
                                 <b>
                                     Rank {{ rank }}
                                 </b>
                             </span>
-                        </td>
-                        <td class="rank-list-cell">
-                            {% comment %}
                             {% if forloop.first %}
-                            <span class="bgtext">
-                                <b>Nejlepší</b>
+                            <span class="bgtext nejlepsi">
+                                Nejlepší
                             </span>
                             {% endif %}
                             {% if forloop.last %}
-                            <span class="bgtext">
-                                <b>Nejhorší</b>
+                            <span class="bgtext nejhorsi">
+                                Nejhorší
                             </span>
                             {% endif %}
+                        </td>
+                        <td class="rank-list-cell">
+                            {% comment %}
                             {% endcomment %}
                             <ul class="horizontal-list rank-list" data-rank="{{ rank }}"></ul>
                         </td>
