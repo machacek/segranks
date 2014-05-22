@@ -80,3 +80,11 @@ ul.horizontal-list li {
 .nejhorsi {
     color: red;
 }
+
+.nepouzitelne {
+    position: absolute;
+    top: 30px;
+    left: 3px;
+    font-size: 9pt; 
+    color: red;
+}

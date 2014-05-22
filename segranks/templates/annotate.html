@@ -11,11 +11,13 @@
         <h3>Instrukce</h3>
 
         <p>Pro danou zdrojovou větu je vybráno několik segmentů. U každého z
-        těchto segmentů vidíte několik překladů. Vaším úkolem je uspořádat tyto
-        překlady relativně od nejlepšího po nejhorší. Lepší překlady umístěte
-        výše, horší níže. Pokud jsou některé překlady stejně kvalitní, umístěte
-        je na stejnou pozici. Překlady, které nedávají žádný smysl a které se
-        nedají navzájem porovnat, umístěte na pozici "Odpad".</p>
+        těchto segmentů vidíte několik překladů. Vaším úkolem je odlišit
+        použitelné překlady (význam lze uhodnout i navzdory mnohým chybám) od
+        nepoužitelných (význam zaručeně kazí, nedávají žádný smysl). Použitelné
+        překlady navíc uspořádejte relativně od nejlepšího po nejhorší. Lepší
+        překlady umístěte výše, horší níže, stejně kvalitní překlady lze
+        umístit na stejnou pozici. Zcela nepoužitelné překlady patří do
+        kategorie "Odpad".</p>
 
         <p>Mějte prosím na vědomí, že segmenty a jejich překlady jsou vybrány
         automaticky a nemusí být dokonalé. Považujte je tedy za přibližné
@@ -96,8 +98,11 @@
                     </tr>
                     {% endfor %}
                     <tr>
-                        <td>
+                        <td class="rank-cell">
                             <span class="rank-label"><b>Odpad</b></span>
+                            <span class="nepouzitelne">
+                                Nepoužitelné
+                            </span>
                         </td>
                         <td>
                             <ul class="horizontal-list rank-list" data-rank="100"></ul>
