@@ -73,22 +73,24 @@
                 <tbody>
                     {% for rank in segment.avialable_ranks %}
                     <tr>
-                        <td align="right" class="rank-cell">
-                            <span>
-                                <b>
-                                    Rank {{ rank }}
-                                </b>
-                            </span>
-                            {% if forloop.first %}
-                            <span class="bgtext nejlepsi">
-                                Nejlepší
-                            </span>
-                            {% endif %}
-                            {% if forloop.last %}
-                            <span class="bgtext nejhorsi">
-                                Nejhorší
-                            </span>
-                            {% endif %}
+                        <td align="right">
+                            <div class="rank-cell">
+                                <span>
+                                    <b>
+                                        Rank {{ rank }}
+                                    </b>
+                                </span>
+                                {% if forloop.first %}
+                                <span class="bgtext nejlepsi">
+                                    Nejlepší
+                                </span>
+                                {% endif %}
+                                {% if forloop.last %}
+                                <span class="bgtext nejhorsi">
+                                    Nejhorší
+                                </span>
+                                {% endif %}
+                            </div>
                         </td>
                         <td class="rank-list-cell">
                             {% comment %}
@@ -98,11 +100,13 @@
                     </tr>
                     {% endfor %}
                     <tr>
-                        <td class="rank-cell">
-                            <span class="rank-label"><b>Odpad</b></span>
-                            <span class="nepouzitelne">
-                                Nepoužitelné
-                            </span>
+                        <td>
+                            <div class="rank-cell">
+                                <span class="rank-label"><b>Odpad</b></span>
+                                <span class="nepouzitelne">
+                                    Nepoužitelné
+                                </span>
+                            </div>
                         </td>
                         <td>
                             <ul class="horizontal-list rank-list" data-rank="100"></ul>
