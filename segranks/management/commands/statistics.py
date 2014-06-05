@@ -29,6 +29,10 @@ def statistics(project):
     yield "name", "sentences", "annot-intra", "agree-intra", "annot-inter", "agree-inter", "annotations", "time", "per-annotation"
     for user in User.objects.all():
         annotated = Sentence.annotated_by_me(project, user).count()
+
+        if annotated == 0:
+            continue
+
         annotated_inter = Sentence.annotated_by_me_and_others(project, user).count()
         annotated_intra = Sentence.annotated_by_me_at_least_twice(project, user).count()
 
