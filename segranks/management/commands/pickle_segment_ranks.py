@@ -27,7 +27,7 @@ class Command(BaseCommand):
             for candidate, rank in zip(segment.candidates, annotation.ranks):
                 expanded_annotation.add_ranked_segment(candidate, rank)
 
-            expanded_annotations[sentence.sentence_id].append(expanded_annotation) 
+            expanded_annotations[sentence.sentence_id, segment.segment_str].append(expanded_annotation) 
 
             i += 1
 
