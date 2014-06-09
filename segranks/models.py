@@ -5,6 +5,7 @@ from itertools import groupby
 from django.db.models import Avg, Count, F, Max, Min, Sum, Q
 import random
 import time
+import datetime
 
 class RankProject(models.Model):
     name = models.CharField(max_length=20)
@@ -16,6 +17,16 @@ class RankProject(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def annotated_time(self, user):
+        print("in time function")
+        time = Annotation.objects\
+                .filter(annotator=user, annotated_segment__sentence__project=self, time_in_seconds__lt=600)\
+                .aggregate(sum=Sum('time_in_seconds'))
+        if time['sum'] is not None:
+            return str(datetime.timedelta(seconds=time['sum']))
+        else:
+            return "0:00:00"
 
 class Sentence(models.Model):
     project = models.ForeignKey(RankProject, related_name='sentences')

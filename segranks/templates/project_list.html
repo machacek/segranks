@@ -1,12 +1,23 @@
 {% extends "base.html" %}
 
+{% load annotated_time %}
+
 {% block content %}
 
 {% for project in object_list %}
-<div>
-    <h1>{{ project.name }}</h1>
-    <p>{{ project.description }}</p>
-    <p><a href="{% url 'segranks.views.annotateview' pk=project.pk %}" class="btn btn-primary btn-lg" role="button">Anotuj <span class="glyphicon glyphicon-pencil"></span></a></p>
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ project.name }}</h3>
+    </div>
+    <div class="panel-body">
+        <p>{{ project.description }}</p>
+        <p>
+            {% if user.is_authenticated %}
+            Odpracovaný čas: {% annotated_time project user %}
+            {% endif %}
+            <a href="{% url 'segranks.views.annotateview' pk=project.pk %}" style="float: right;" class="btn btn-primary" role="button">Anotuj <span class="glyphicon glyphicon-pencil"></span></a>
+        </p>
+    </div>
 </div>
 {% endfor %}
 
