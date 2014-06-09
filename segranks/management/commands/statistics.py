@@ -19,6 +19,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         project = RankProject.objects.get(pk=int(args[0]))
 
+        compute_P_E(project)
+
         print(tabulate(
             tabular_data = statistics(project),
             tablefmt = 'plain',
@@ -118,11 +120,31 @@ def agrees_all(annot_1, annot_2):
             agree += 1
         all += 1
     return agree, all
-        
+
+
+
+P_E = None        
+def compute_P_E(project):
+    equal = 0
+    unequal = 0
+    for annotation in Annotation.objects.filter(annotated_segment__sentence__project=project):
+        for rank1, rank2 in combinations(annotation.ranks, 2):
+            if rank1 == rank2:
+                equal += 1
+            else:
+                unequal += 1
+    
+    prob_equal = equal / (equal + unequal)
+    prob_better = (unequal / 2) / (equal + unequal)
+    prob_worse = prob_better
+    global P_E
+    P_E = prob_equal**2 + prob_better**2 + prob_worse**2
+    print("P_E", P_E)
+
+
 def kappa(agree, all):
     try:
         P_A = agree / all
-        P_E = 1/3 # is it?
         return (P_A - P_E) / (1 - P_E)
     except ZeroDivisionError:
         return None
