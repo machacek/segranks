@@ -43,3 +43,13 @@ class ExpandedAnnotation(object):
             pass
         
         return False, []
+    
+    def better_worse_without2(self, system):
+        try:
+            system_rank = self.system_indexed[system]
+            if len(list(filter(lambda x: x==system_rank, self.system_indexed.values()))) > 1:
+                return True, self.better_worse_system_comparisons()
+        except KeyError:
+            pass
+        
+        return False, []
