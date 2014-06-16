@@ -28,7 +28,7 @@ class Command(BaseCommand):
         ))
 
 def statistics(project):
-    yield "name", "sentences", "annot-intra", "agree-intra", "annot-inter", "agree-inter", "annotations", "time", "per-annotation"
+    yield "name", "e-mail", "sentences", "annot-intra", "agree-intra", "annot-inter", "agree-inter", "annotations", "time", "per-annotation"
     for user in User.objects.all():
         annotated = Sentence.annotated_by_me(project, user).count()
 
@@ -51,7 +51,7 @@ def statistics(project):
         except:
             time_sum, time_avg = None, None
 
-        yield user.username, annotated, safe_div(annotated_intra,annotated), intra_agreement(project, user), safe_div(annotated_inter,annotated), inter_agreement(project, user), annotations, time_sum, time_avg
+        yield user.username, user.email, annotated, safe_div(annotated_intra,annotated), intra_agreement(project, user), safe_div(annotated_inter,annotated), inter_agreement(project, user), annotations, time_sum, time_avg
     yield overall_statistics(project)
 
 
@@ -107,7 +107,7 @@ def overall_statistics(project):
     except:
         time_sum, time_avg = None, None
 
-    return "total", annotated, None, intra_kappa, None, inter_kappa, annotations, time_sum, time_avg
+    return "total", None, annotated, None, intra_kappa, None, inter_kappa, annotations, time_sum, time_avg
 
 def agrees_all(annot_1, annot_2):
     all = 0
