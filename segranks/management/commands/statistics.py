@@ -20,6 +20,7 @@ class Command(BaseCommand):
         project = RankProject.objects.get(pk=int(args[0]))
 
         compute_P_E(project)
+        compute_reward_per_annotation(project)
 
         print(tabulate(
             tabular_data = statistics(project),
@@ -28,7 +29,7 @@ class Command(BaseCommand):
         ))
 
 def statistics(project):
-    yield "name", "e-mail", "sentences", "annot-intra", "agree-intra", "annot-inter", "agree-inter", "annotations", "time", "per-annotation"
+    yield "name", "e-mail", "sentences", "annotations", "time", "reward/Kc", "annotatin-time", "kappa-intra", "kappa-inter"
     for user in User.objects.all():
         annotated = Sentence.annotated_by_me(project, user).count()
 
@@ -51,7 +52,9 @@ def statistics(project):
         except:
             time_sum, time_avg = None, None
 
-        yield user.username, user.email, annotated, safe_div(annotated_intra,annotated), intra_agreement(project, user), safe_div(annotated_inter,annotated), inter_agreement(project, user), annotations, time_sum, time_avg
+        reward = int(annotations * reward_per_annotation)
+
+        yield user.username, user.email, annotated, annotations, time_sum, reward, time_avg, intra_agreement(project, user), inter_agreement(project, user)
     yield overall_statistics(project)
 
 
@@ -107,7 +110,9 @@ def overall_statistics(project):
     except:
         time_sum, time_avg = None, None
 
-    return "total", None, annotated, None, intra_kappa, None, inter_kappa, annotations, time_sum, time_avg
+    reward = int(annotations * reward_per_annotation)
+
+    return "total", None, annotated, annotations, time_sum, reward, time_avg, intra_kappa, inter_kappa
 
 def agrees_all(annot_1, annot_2):
     all = 0
@@ -139,7 +144,18 @@ def compute_P_E(project):
     prob_worse = prob_better
     global P_E
     P_E = prob_equal**2 + prob_better**2 + prob_worse**2
-    print("P_E", P_E)
+    print("P(E) = ", P_E)
+
+average_reward_per_hour = 150
+reward_per_annotation = None
+def compute_reward_per_annotation(project):
+    avg_time_per_annotation = Annotation.objects\
+            .filter(annotated_segment__sentence__project=project, time_in_seconds__lt=600)\
+            .aggregate(avg=Avg('time_in_seconds'))['avg']
+    global reward_per_annotation
+    reward_per_annotation = avg_time_per_annotation * average_reward_per_hour / 3600
+    print("Annotation cost: %.2f Kc" % reward_per_annotation)
+
 
 
 def kappa(agree, all):
