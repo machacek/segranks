@@ -29,7 +29,7 @@ class Command(BaseCommand):
         ))
 
 def statistics(project):
-    yield "name", "e-mail", "sentences", "annotations", "time", "reward/Kc", "annotatin-time", "kappa-intra", "kappa-inter"
+    yield "name", "e-mail", "id", "sentences", "annotations", "time", "reward/Kc", "annotatin-time", "kappa-intra", "kappa-inter"
     for user in User.objects.all():
         annotated = Sentence.annotated_by_me(project, user).count()
 
@@ -54,7 +54,7 @@ def statistics(project):
 
         reward = int(annotations * reward_per_annotation)
 
-        yield user.username, user.email, annotated, annotations, time_sum, reward, time_avg, intra_agreement(project, user), inter_agreement(project, user)
+        yield user.username, user.email, user.pk, annotated, annotations, time_sum, reward, time_avg, intra_agreement(project, user), inter_agreement(project, user)
     yield overall_statistics(project)
 
 
@@ -112,7 +112,7 @@ def overall_statistics(project):
 
     reward = int(annotations * reward_per_annotation)
 
-    return "total", None, annotated, annotations, time_sum, reward, time_avg, intra_kappa, inter_kappa
+    return "total", None, None, annotated, annotations, time_sum, reward, time_avg, intra_kappa, inter_kappa
 
 def agrees_all(annot_1, annot_2):
     all = 0
