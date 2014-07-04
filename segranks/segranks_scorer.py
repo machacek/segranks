@@ -4,7 +4,7 @@ from nltk.align import Alignment
 from collections import defaultdict, Counter
 
 class Scorer(object):
-    def __init__(self, database, source_segments, match='exact'):
+    def __init__(self, database, source_segments, match='exact', **kwargs):
         self.load_database(database)
         self.load_source_segments(source_segments)
 
