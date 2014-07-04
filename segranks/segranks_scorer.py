@@ -92,10 +92,11 @@ class Scorer(object):
             all = Counter()
             for annotation in annotations:
                 for cand_segment, cand_segment_rank in annotation.segment_indexed.items():
-                    for other_cand_segment, other_cand_segment_rank in annotation.segment_indexed.items():
+                    for other_cand_segment_rank in annotation.system_indexed.values():
                         if cand_segment_rank.rank < other_cand_segment_rank.rank:
                             better[cand_segment] += 1
-                        all[cand_segment] += 1
+                        if cand_segment_rank.rank != other_cand_segment_rank.rank:
+                            all[cand_segment] += 1
 
             # Indexed by candidate segments, values are tuples (better, all)
             cand_segment_better_all_counts = dict()
