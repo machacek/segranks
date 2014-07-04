@@ -1,5 +1,9 @@
 from __future__ import unicode_literals
 import pickle
+import sys
+
+sys.path.append('/ha/home/machacek/.local/lib/python2.6/site-packages')
+
 from nltk.align import Alignment
 from collections import defaultdict, Counter
 
@@ -59,13 +63,20 @@ class Scorer(object):
                     self.counter_all += 1
                 except KeyError:
                     self.counter_all += 1
+                    # print ""
+                    # print sentence_id
+                    # print source_segment
+                    # print cand_segment
+                    # print cand_segment_better_all_counts.keys()
                     continue
             return better, all
         else:
             raise NotImplemented
     
     def calculate_score(self, comps):
-        return float(comps[0]) / comps[1]
+        score = float(comps[0]) / comps[1]
+        print "score: ", score
+        return score
 
     def number_of_scores(self):
         return 2
@@ -88,10 +99,13 @@ class Scorer(object):
         # Indexed by (sentence_id, source_segment), values are lists of expanded annotations
         self.converted_database = dict()
         for (sentence_id, source_segment), annotations in rank_database.items():
-            better = Counter()
-            all = Counter()
+            better = dict()
+            all = dict()
             for annotation in annotations:
                 for cand_segment, cand_segment_rank in annotation.segment_indexed.items():
+                    if cand_segment not in all:
+                        all[cand_segment] = 0
+                        better[cand_segment] = 0
                     for other_cand_segment_rank in annotation.system_indexed.values():
                         if cand_segment_rank.rank < other_cand_segment_rank.rank:
                             better[cand_segment] += 1
