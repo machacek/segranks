@@ -8,11 +8,11 @@ from nltk.align import Alignment
 from collections import defaultdict, Counter
 
 class Scorer(object):
-    def __init__(self, database, source_segments, match='exact', **kwargs):
+    def __init__(self, database, source_segments, match='contains', **kwargs):
         self.load_database(database)
         self.load_source_segments(source_segments)
 
-        assert match in ['exact', 'closest_words', 'closest_characters']
+        assert match in ['align', 'contains']
         self.match = match
 
         self.counter_all = 0
@@ -30,13 +30,14 @@ class Scorer(object):
 
 
     def prepare_stats(self, sentence_id, sentence, alignment=None):
-        sentence = sentence.split()
-        alignment = Alignment(alignment)
         sentence_id += 1
 
-        if self.match == 'exact':
-            better = 0
-            all = 0
+        better = 0
+        all = 0
+
+        if self.match == 'align':
+            alignment = Alignment(alignment)
+            sentence_split = sentence.split()
             for source_segment, source_idxs in self.source_segments[sentence_id]:
 
                 try:
@@ -48,7 +49,7 @@ class Scorer(object):
                     print ""
                     continue
 
-                cand_segment = " ".join([sentence[i] for i in cand_idxs])
+                cand_segment = " ".join([sentence_split[i] for i in cand_idxs])
                 try:
                     cand_segment_better_all_counts = self.converted_database[sentence_id, source_segment]
                 except KeyError:
@@ -70,8 +71,36 @@ class Scorer(object):
                     # print cand_segment_better_all_counts.keys()
                     continue
             return better, all
+
+        elif self.match == 'contains':
+            for source_segment, _ in self.source_segments[sentence_id]:
+
+                try:
+                    cand_segment_better_all_counts = self.converted_database[sentence_id, source_segment]
+                except KeyError:
+                    self.missing_sentences.add(sentence_id)
+                    continue
+
+                best_candidate = None
+                best_candidate_length = 0
+                for candidate in cand_segment_better_all_counts:
+                    if candidate in sentence and len(candidate) > best_candidate_length:
+                        best_candidate = candidate
+                        best_candidate_length = len(candidate)
+
+                if best_candidate is not None:
+                    better_segment, all_segment = cand_segment_better_all_counts[best_candidate]
+                    better += better_segment
+                    all += all_segment
+
+                    self.counter_hit += 1
+                    self.counter_all += 1
+                else:
+                    self.counter_all += 1
         else:
             raise NotImplemented
+        
+        return better, all
     
     def calculate_score(self, comps):
         score = float(comps[0]) / comps[1]
