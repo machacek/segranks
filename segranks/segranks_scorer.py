@@ -116,7 +116,8 @@ class Scorer(object):
     def __del__(self):
         print "counter_hit: ", self.counter_hit
         print "counter_all: ", self.counter_all
-        print "hit rate: ", float(self.counter_hit) / self.counter_all
+        if self.counter_all > 0:
+            print "hit rate: ", float(self.counter_hit) / self.counter_all
         print "missing sentences: ", len(self.missing_sentences)
 
     def load_database(self, database):
