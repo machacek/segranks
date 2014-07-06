@@ -12,7 +12,7 @@ class Scorer(object):
         self.load_database(database)
         self.load_source_segments(source_segments)
 
-        assert match in ['align', 'contains']
+        assert match in ['align', 'contains', 'penalize_unknown']
         self.match = match
 
         self.counter_all = 0
@@ -97,6 +97,36 @@ class Scorer(object):
                     self.counter_all += 1
                 else:
                     self.counter_all += 1
+
+        elif self.match == 'penalize_unknown':
+            for source_segment, _ in self.source_segments[sentence_id]:
+                try:
+                    cand_segment_better_all_counts = self.converted_database[sentence_id, source_segment]
+                except KeyError:
+                    self.missing_sentences.add(sentence_id)
+                    continue
+
+                best_candidate = None
+                best_candidate_length = 0
+                for candidate in cand_segment_better_all_counts:
+                    if candidate in sentence and len(candidate) > best_candidate_length:
+                        best_candidate = candidate
+                        best_candidate_length = len(candidate)
+
+                if best_candidate is not None:
+                    better_segment, all_segment = cand_segment_better_all_counts[best_candidate]
+                    better += better_segment
+                    all += all_segment
+
+                    self.counter_hit += 1
+                    self.counter_all += 1
+                else:
+                    try:
+                        all += len(self.rank_database[sentence_id, source_segment][0].system_indexed)
+                    except:
+                        pass
+                    self.counter_all += 1
+            
         else:
             raise NotImplemented
         
