@@ -46,28 +46,47 @@ class ExpandedAnnotation(object):
 
     def better_worse_without_fuzzy(self, system):
         from edit_distance import edit_distance
+        
+        distance = 0
+        rank_cmp = 0
+        comparisons = []
 
         try:
+            original_rank = self.system_indexed[system].rank
+
             system_segment = self.system_indexed[system].segment
             system_indexed_copy = dict(self.system_indexed)
             del system_indexed_copy[system]
             closest_system = min(system_indexed_copy, key=lambda x: edit_distance(system_segment, system_indexed_copy[x].segment))
-            system_indexed_copy[system] = SegmentRank(segment=system_segment, rank=system_indexed_copy[closest_system].rank)
+            closest_rank = system_indexed_copy[closest_system].rank
+            system_indexed_copy[system] = SegmentRank(segment=system_segment, rank=closest_rank)
+
 
             closest_segment = system_indexed_copy[closest_system].segment
             distance = edit_distance(system_segment, closest_segment)
+
+            rank_cmp = cmp(closest_rank, original_rank)
             #if closest_segment != system_segment:
-            print(system_segment.encode('utf-8'), "|", closest_segment.encode('utf-8'), "|", distance)
+            #    comp = "\\better{}" if closest_rank < original_rank else "\\worse{}" if closest_rank > original_rank else "\\equal{}"
+            #    print(system_segment.encode('utf-8'), "&", closest_segment.encode('utf-8'), "&", distance, "&", comp, "\\\\")
+            
+
 
             for system1, segment_rank1 in system_indexed_copy.items():
                 for system2, segment_rank2 in system_indexed_copy.items():
                     if segment_rank1.rank < segment_rank2.rank:
-                        yield system1, system2
+                        comparisons.append((system1, system2))
+
 
         except KeyError:
+            #print("KeyError")
             pass
         except ValueError:
+            #print("ValueError")
             pass
+
+        rank_cmp = -1 if rank_cmp < 0 else 1 if rank_cmp > 0 else 0
+        return rank_cmp, distance, comparisons
         
         
 
