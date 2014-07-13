@@ -1,11 +1,11 @@
 from __future__ import unicode_literals
 import pickle
 import math
+import codecs
 
 from collections import defaultdict, Counter
 
-LOWERCASE = True
-
+LOWERCASE = False
 N = 4
 
 class Scorer(object):
@@ -51,7 +51,7 @@ class Scorer(object):
         if candidate_length > reference_length:
             BP = 1
         else:
-            BP = math.exp(1 - float(r) / float(c))
+            BP = math.exp(1 - float(reference_length) / float(candidate_length))
 
         return BP * base_score 
 
@@ -63,9 +63,10 @@ class Scorer(object):
         self.reference_lengths = [None]
         for file_name in file_names:
             self.load_reference(file_name)
+        self.load_database()
 
     def load_reference(self, file_name):
-        with open(file_name, 'r') as file:
+        with codecs.open(file_name, 'r', 'utf-8') as file:
             for sentence_id, line in enumerate(file, 1):
                 
                 if LOWERCASE:
@@ -78,39 +79,35 @@ class Scorer(object):
                     self.reference_lengths.append(len(sentence))
 
                 for n in range(N):
-                    c = Counter(find_ngrams(sentence, n+1)) 
-                    self.reference_ngrams[sentence_id][n] |= c
+                    ngrams = Counter(find_ngrams(sentence, n+1)) 
+                    self.reference_ngrams[sentence_id][n] |= ngrams
 
     def use_alignment(self):
         return False
 
-    def load_database(self, database):
-        with open(database, 'rb') as database_file:
+    def load_database(self):
+        with open(self.database_file, 'rb') as database_file:
             rank_database = pickle.load(database_file)
 
-        self.rank_database = rank_database
-
-        # Indexed by (sentence_id, source_segment), values are lists of expanded annotations
-        self.converted_database = dict()
         for (sentence_id, source_segment), annotations in rank_database.items():
-            better = dict()
-            all = dict()
             for annotation in annotations:
-                for cand_segment, cand_segment_rank in annotation.segment_indexed.items():
-                    if cand_segment not in all:
-                        all[cand_segment] = 0
-                        better[cand_segment] = 0
-                    for other_cand_segment_rank in annotation.system_indexed.values():
-                        if cand_segment_rank.rank < other_cand_segment_rank.rank:
-                            better[cand_segment] += 1
-                        if cand_segment_rank.rank != other_cand_segment_rank.rank:
-                            all[cand_segment] += 1
+                best_rank = min(map(lambda x: x.rank, annotation.segment_indexed.values()))
+                best_segments = list(filter(
+                                    lambda x: annotation.segment_indexed[x].rank == best_rank,
+                                    annotation.segment_indexed
+                                ))
 
-            # Indexed by candidate segments, values are tuples (better, all)
-            cand_segment_better_all_counts = dict()
-            for cand_segment in all:
-                cand_segment_better_all_counts[cand_segment] = (better[cand_segment], all[cand_segment])
-            self.converted_database[sentence_id, source_segment] = cand_segment_better_all_counts
+                for segment in best_segments:
+                    if LOWERCASE:
+                        segment = segment.strip().lower().split()
+                    else:
+                        segment = segment.strip().split()
+
+                    for i in range(N):
+                        ngrams = Counter(find_ngrams(segment, i+1))
+                        self.reference_ngrams[sentence_id][i] |= ngrams
+
+
 
 def find_ngrams(input_list, n):
     return zip(*[input_list[i:] for i in range(n)])
