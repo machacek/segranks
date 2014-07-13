@@ -188,5 +188,7 @@ class Scorer(object):
                 idxs = [int(item) for item in idxs.split(' ')]
                 self.source_segments[sentence_id].append((source_segment, idxs))
             
+    def set_reference_files(self, file_names):
+        pass
 
     
