@@ -103,3 +103,6 @@ The following is an example JSON output:
         }
     ],
 }
+
+You can also find all the annotated segments from experiments in my thesis in
+the file annotated.segments.
