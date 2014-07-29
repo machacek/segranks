@@ -1,0 +1,105 @@
+This package contains SegRanks application which is an annotation interface
+used for ranking short segments of machine translation.
+
+1) Installing and Running the Application
+
+It is a Django web application written in Python and requires Python 2.7 and
+some additional Python dependencies.  They are listed in requirements.txt and
+you can easily install them to a new virtual environment using the following
+command:
+
+$ virtualenv /path/to/new/environment
+$ . /path/to/new/environment/bin/activate
+$ pip install -r requirements.txt
+
+If you want to run the application locally, an sqllite database is used. To
+initialize it and apply all database migrations, run:
+
+$ ./manage.py syncdb 
+$ ./manage.py migrate 
+
+The database is now initialized and you can start the local web server
+
+$ ./manage.py runserver
+
+and open the application in your browser (usually http://127.0.0.1:8000/).
+However, the list of annotation project will be empty. You need to create
+a project and upload extracted segments. This is described in Section 2.
+
+The application is also ready to be deployed to Heroku cloud. To do that, you
+need in essence to create a Heroku application, initialize a Git repository
+with SegRanks application, add Heroku as a remote and push your commits there.
+It will automatically install all the dependencies. The application is
+configured to automatically set the database when deployed to Heroku. Please
+see Heroku documentation for more details.
+
+2) Creating a New Annotation Project
+
+To create a new annotation project, you need to have a file with extracted
+segments.  The file has one row for each segment with the following tab
+separated fields:
+
+    - sentence ID
+    - tokenized source sentence
+    - tokenized reference sentence translation
+    - tokenized source segment
+    - tokenized candidate segment 
+    - zero based indices of source segment words (used for highlighting the segment in source sentence)
+
+You can use attached file extracted.segments, which contains segments extracted
+for the experiment in my thesis. To create a project, run:
+
+$ ./manage.py create_project extracted.segments "<Project Name>" "<Project Description>"
+
+3) Annotating
+
+Annotating in the application is very easy. Before you start, you need to be
+registered and signed in. To start annotating, select an annotation project you
+want to work on. You will be then shown annotation instructions and annotated
+sentence.  For each annotated segment, drag and drop segment candidates into
+the ranks.  When all the segment candidates are placed in the ranks, the submit
+button is enabled and you can submit your annotation to server. A new sentence
+to annotate will be displayed. 
+
+4) Printing Annotation Statistics
+
+You can list annotators with various statistics (number of annotated segments,
+time spent annotating, agreements, etc.) with the following command:
+
+$ ./manage.py statistics <project_id>
+
+To get list of available projects with their IDs, run the command without the
+argument.
+
+5) Exporting the Database
+
+To export segments with their rank in JSON or in Python Pickle format, use one
+of the following commands:
+
+$ ./manage.py export_project <project_id> <out_file> json
+$ ./manage.py export_project <project_id> <out_file> pickle
+
+Both formats store a dictionary indexed by tuples of sentence IDs and source
+segments. The values of this dictionary are list of rank dictionaries. The rank
+dictionary is indexed by candidate segments and its values are assigned ranks.
+The following is an example JSON output:
+
+{
+    "2386,Writing books saved me .": [
+        {
+            "Knihy psaní uložily mě .": 5,
+            "Napsané knihy ušetřily mě .": 4,
+            "Psaní knih mě zachránil .": 1,
+            "Psaní knihy mě zachránil .": 2,
+            "Psaní knihy mě zachránily .": 2,
+            "Písemné knihy mě zachránily .": 5
+        }
+    ],
+    "2755,At each station": [
+        {
+            "Na každé stanici": 1,
+            "U každé stanice": 2,
+            "V každé stanici": 2
+        }
+    ],
+}

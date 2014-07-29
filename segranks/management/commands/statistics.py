@@ -17,7 +17,10 @@ class Command(BaseCommand):
     help = 'Exports annotations to tsv format'
 
     def handle(self, *args, **options):
-        project = RankProject.objects.get(pk=int(args[0]))
+        try:
+            project = RankProject.objects.get(pk=int(args[0]))
+        except IndexError:
+            return print_projects()
 
         compute_P_E(project)
         compute_reward_per_annotation(project)
@@ -170,3 +173,18 @@ def safe_div(nominator, denominator):
         return nominator / denominator
     except ZeroDivisionError:
         return None
+
+
+def print_projects():
+    print("Usage: ./manage.py statistics <project_id>\n")
+
+    projects = []
+
+    for project in RankProject.objects.all():
+        projects.append((str(project.pk), project.name, project.description))
+
+    print(tabulate(
+            projects,
+            headers=("id", "name", "description"),
+            tablefmt="plain",
+            ))

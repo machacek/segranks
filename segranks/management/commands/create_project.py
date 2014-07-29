@@ -5,7 +5,7 @@ from itertools import count, groupby
 from collections import namedtuple
 
 class Command(BaseCommand):
-    args = 'name data_file description instructions'
+    args = 'name data_file description'
     help = 'Creates new RanksProject and loads givet data file into database'
 
     def handle(self, *args, **options):
